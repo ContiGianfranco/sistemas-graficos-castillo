@@ -32,14 +32,18 @@ class Object3D {
         gl.uniformMatrix4fv(normalMatrixUniform, false, normalMatrix);
 
         if (this.vertexBuffer && this.indexBuffer && this.normalBuffer){
+            let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
+            gl.enableVertexAttribArray(vertexPositionAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
-            gl.vertexAttribPointer(glProgram.vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
+            let vertexNormalAttribute = gl.getAttribLocation(glProgram, "aVertexNormal");
+            gl.enableVertexAttribArray(vertexNormalAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
-            gl.vertexAttribPointer(glProgram.vertexNormalAttribute, this.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+            gl.vertexAttribPointer(vertexNormalAttribute, this.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
-            gl.drawElements(gl.TRIANGLES, this.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+            gl.drawElements(gl.TRIANGLE_STRIP, this.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
         }
 
         for (let i = 0;i < this.childes.length; i++){
@@ -50,6 +54,10 @@ class Object3D {
     rotar(angulo,eje){
         glMatrix.mat4.rotate(this.modelMatrix,this.modelMatrix,angulo,eje);
         glMatrix.mat4.rotate(this.normalMatrix,this.normalMatrix,angulo,eje);
+    }
+
+    addChild(child){
+        this.childes.push(child);
     }
 }
 

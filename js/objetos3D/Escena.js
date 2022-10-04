@@ -28,14 +28,14 @@ function getNrm(alfa,beta){
     return n;
 }
 
-class Terreno extends Object3D {
+class Escena extends Object3D {
 
     constructor() {
 
         let pos = [];
         let normal=[];
-        let rows=25;
-        let cols=25;
+        let rows=4;
+        let cols=4;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){
@@ -86,9 +86,9 @@ class Terreno extends Object3D {
 
 
         let trianglesIndexBuffer = gl.createBuffer();
+        trianglesIndexBuffer.number_vertex_point = index.length;
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, trianglesIndexBuffer);
         gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(index), gl.STATIC_DRAW);
-        trianglesIndexBuffer.number_vertex_point = index.length;
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
@@ -97,4 +97,4 @@ class Terreno extends Object3D {
 
 }
 
-export {Terreno}
+export {Escena}
