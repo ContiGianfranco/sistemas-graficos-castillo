@@ -107,7 +107,9 @@ class Torre extends Object3D {
     }
 
     init(){
-        this.addChild(new Almena())
+        let almena = new Almena();
+        almena.init();
+        this.addChild(almena);
     }
 
 }

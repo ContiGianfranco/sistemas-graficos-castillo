@@ -13,7 +13,7 @@ function getPos(alfa,beta,controlPoints){
     return [x,z,y];
 }
 
-function getNrm(alfa,beta){
+function getNrm(alfa,beta,controlPoints){
 
     var p=getPos(alfa,beta,controlPoints);
     var v=glMatrix.vec3.create();
@@ -58,7 +58,7 @@ class RevolutionCurve extends Object3D {
                 pos.push(p[1]);
                 pos.push(p[2]);
 
-                let n=getNrm(alfa,beta);
+                let n=getNrm(alfa,beta,controlPoints);
 
                 normal.push(n[0]);
                 normal.push(n[1]);
