@@ -1,15 +1,29 @@
 import {Object3D} from "./Object3D.js";
 import {gl} from "../main.js";
+import {cubicCurve} from "../curvas/curva_bezier.js";
 
 function getPos(alfa,beta){
 
-    let x = beta*Math.cos(alfa*2*Math.PI);
-    let y = beta*Math.sin(alfa*2*Math.PI);
-    let z = 0;
+    let controlPoints1 = [[0.1,0,0.40],[0.1,0,0.39],[0.1,0,0.36],[0.1,0,0.35]]
+    let controlPoints2 = [[0.08,0,0.40],[0.09,0,0.40],[0.09,0,0.40],[0.1,0,0.40]]
+    let controlPoints3 = [[0.08,0,0.375],[0.08,0,0.375],[0.08,0,0.40],[0.08,0,0.40]]
+    let controlPoints4 = [[0.0,0,0.375],[0.0,0,0.375],[0.08,0,0.375],[0.08,0,0.375]]
 
-    if (beta <= 0.5 && beta >= 0.4) {
-        z=-0.1;
+    let point;
+
+    if (beta <= 1/4) {
+        point = cubicCurve(beta*4, controlPoints1);
+    } else if (beta <= 2/4){
+        point = cubicCurve((beta-1/4)*4, controlPoints2);
+    } else if (beta <= 3/4){
+        point = cubicCurve((beta-2/4)*4, controlPoints3);
+    } else {
+        point = cubicCurve((beta-3/4)*4, controlPoints4);
     }
+
+    let x = point.x*Math.cos(alfa*2*Math.PI);
+    let y = point.x*Math.sin(alfa*2*Math.PI);
+    let z = point.z;
 
     return [x,z,y];
 }
@@ -20,7 +34,7 @@ function getNrm(alfa,beta){
     var v=glMatrix.vec3.create();
     glMatrix.vec3.normalize(v,p);
 
-    var delta=0.02;
+    var delta=0.005;
     var p1=getPos(alfa,beta);
     var p2=getPos(alfa,beta+delta);
     var p3=getPos(alfa+delta,beta);
@@ -36,14 +50,14 @@ function getNrm(alfa,beta){
     return n;
 }
 
-class Terreno extends Object3D {
+class Almena extends Object3D {
 
     constructor() {
 
         let pos = [];
         let normal=[];
-        let rows=25;
-        let cols=50;
+        let rows=500;
+        let cols=500;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){
@@ -103,6 +117,10 @@ class Terreno extends Object3D {
         super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
     }
 
+    init(){
+        this.addChild()
+    }
+
 }
 
-export {Terreno}
+export {Almena}

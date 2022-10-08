@@ -1,15 +1,18 @@
 import {Object3D} from "./Object3D.js";
 import {gl} from "../main.js";
+import {cubicCurve} from "../curvas/curva_bezier.js";
+import {Almena} from "./Almena.js";
 
 function getPos(alfa,beta){
 
-    let x = beta*Math.cos(alfa*2*Math.PI);
-    let y = beta*Math.sin(alfa*2*Math.PI);
-    let z = 0;
+    let controlPoints1 = [[0.1,0,0.35],[0.05,0,0.3],[0.15,0,0.1],[0.1,0,0]]
 
-    if (beta <= 0.5 && beta >= 0.4) {
-        z=-0.1;
-    }
+    let point = cubicCurve(beta, controlPoints1)
+
+
+    let x = point.x*Math.cos(alfa*2*Math.PI);
+    let y = point.x*Math.sin(alfa*2*Math.PI);
+    let z = point.z;
 
     return [x,z,y];
 }
@@ -20,7 +23,7 @@ function getNrm(alfa,beta){
     var v=glMatrix.vec3.create();
     glMatrix.vec3.normalize(v,p);
 
-    var delta=0.02;
+    var delta=0.001;
     var p1=getPos(alfa,beta);
     var p2=getPos(alfa,beta+delta);
     var p3=getPos(alfa+delta,beta);
@@ -36,13 +39,13 @@ function getNrm(alfa,beta){
     return n;
 }
 
-class Terreno extends Object3D {
+class Torre extends Object3D {
 
     constructor() {
 
         let pos = [];
         let normal=[];
-        let rows=25;
+        let rows=50;
         let cols=50;
 
         for (let i=0;i<rows;i++){
@@ -103,6 +106,10 @@ class Terreno extends Object3D {
         super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
     }
 
+    init(){
+        this.addChild(new Almena())
+    }
+
 }
 
-export {Terreno}
+export {Torre}

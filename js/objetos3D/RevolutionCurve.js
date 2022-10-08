@@ -1,29 +1,28 @@
 import {Object3D} from "./Object3D.js";
 import {gl} from "../main.js";
+import {cubicCurve} from "../curvas/curva_bezier.js";
 
-function getPos(alfa,beta){
+function getPos(alfa,beta,controlPoints){
 
-    let x = beta*Math.cos(alfa*2*Math.PI);
-    let y = beta*Math.sin(alfa*2*Math.PI);
-    let z = 0;
+    let point = cubicCurve(beta, controlPoints);
 
-    if (beta <= 0.5 && beta >= 0.4) {
-        z=-0.1;
-    }
+    let x = point.x*Math.cos(alfa*2*Math.PI);
+    let y = point.x*Math.sin(alfa*2*Math.PI);
+    let z = point.z;
 
     return [x,z,y];
 }
 
 function getNrm(alfa,beta){
 
-    var p=getPos(alfa,beta);
+    var p=getPos(alfa,beta,controlPoints);
     var v=glMatrix.vec3.create();
     glMatrix.vec3.normalize(v,p);
 
     var delta=0.02;
-    var p1=getPos(alfa,beta);
-    var p2=getPos(alfa,beta+delta);
-    var p3=getPos(alfa+delta,beta);
+    var p1=getPos(alfa,beta,controlPoints);
+    var p2=getPos(alfa,beta+delta,controlPoints);
+    var p3=getPos(alfa+delta,beta,controlPoints);
 
     var v1=glMatrix.vec3.fromValues(p2[0]-p1[0],p2[1]-p1[1],p2[2]-p1[2]);
     var v2=glMatrix.vec3.fromValues(p3[0]-p1[0],p3[1]-p1[1],p3[2]-p1[2]);
@@ -36,14 +35,16 @@ function getNrm(alfa,beta){
     return n;
 }
 
-class Terreno extends Object3D {
+class RevolutionCurve extends Object3D {
 
-    constructor() {
+    constructor(points) {
+
+        let controlPoints = points;
 
         let pos = [];
         let normal=[];
-        let rows=25;
-        let cols=50;
+        let rows=80;
+        let cols=80;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){
@@ -51,7 +52,7 @@ class Terreno extends Object3D {
                 let alfa=j/(cols-1);
                 let beta=(i/(rows-1));
 
-                let p=getPos(alfa,beta);
+                let p=getPos(alfa,beta,controlPoints);
 
                 pos.push(p[0]);
                 pos.push(p[1]);
@@ -105,4 +106,4 @@ class Terreno extends Object3D {
 
 }
 
-export {Terreno}
+export {RevolutionCurve}
