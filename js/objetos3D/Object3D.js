@@ -56,6 +56,10 @@ class Object3D {
         glMatrix.mat4.rotate(this.normalMatrix,this.normalMatrix,angulo,eje);
     }
 
+    escalar(escala){
+        glMatrix.mat4.scale(this.modelMatrix,this.modelMatrix,escala);
+    }
+
     addChild(child){
         this.childes.push(child);
     }
