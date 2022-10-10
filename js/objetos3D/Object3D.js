@@ -60,6 +60,10 @@ class Object3D {
         glMatrix.mat4.scale(this.modelMatrix,this.modelMatrix,escala);
     }
 
+    trasladar(pos){
+        glMatrix.mat4.translate(this.modelMatrix,this.modelMatrix,pos);
+    }
+
     addChild(child){
         this.childes.push(child);
     }

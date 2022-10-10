@@ -52,7 +52,7 @@ function setupWebGL(){
 
     mat4.identity(viewMatrix);
     mat4.rotate(viewMatrix,viewMatrix, 0.5,[1.0, 0.0, 0.0])
-    mat4.translate(viewMatrix,viewMatrix, [0.0, -.75, -1.5]);
+    mat4.translate(viewMatrix,viewMatrix, [0.0, -1., -2]);
 
     escena = new Escena();
     escena.init();
