@@ -1,6 +1,6 @@
 import {Object3D} from "./Object3D.js";
 import {Muralla} from "./Muralla.js";
-import {Torre} from "./Torre.js";
+import {Tower} from "../models/Tower.js";
 
 
 class TramoMuralla extends Object3D {
@@ -16,8 +16,7 @@ class TramoMuralla extends Object3D {
         muralla.escalar([1,0.75,1])
         this.addChild(muralla);
 
-        let torre = new Torre();
-        torre.init();
+        let torre = new Tower();
         torre.trasladar([0.0,0.0,.5]);
         this.addChild(torre);
     }
