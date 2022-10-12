@@ -14,11 +14,6 @@ function getPos(alfa,beta,controlPoints){
 }
 
 function getNrm(alfa,beta,controlPoints){
-
-    var p=getPos(alfa,beta,controlPoints);
-    var v=glMatrix.vec3.create();
-    glMatrix.vec3.normalize(v,p);
-
     var delta=0.02;
     var p1=getPos(alfa,beta,controlPoints);
     var p2=getPos(alfa,beta+delta,controlPoints);

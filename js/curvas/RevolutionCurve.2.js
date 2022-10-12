@@ -1,67 +1,49 @@
-import {Object3D} from "./Object3D.js";
+import {Object3D} from "../objetos3D/Object3D.js";
 import {gl} from "../main.js";
-import {cubicCurve} from "../curvas/curva_bezier.js";
-import {Almena} from "./Almena.js";
 
-function getPos(alfa,beta){
+class RevolutionCurve extends Object3D {
 
-    let controlPoints1 = [[0.1,0,0.35],[0.05,0,0.3],[0.11,0,0.1],[0.1,0,0]]
-
-    let point = cubicCurve(beta, controlPoints1)
-
-
-    let x = point.x*Math.cos(alfa*2*Math.PI);
-    let y = point.x*Math.sin(alfa*2*Math.PI);
-    let z = point.z;
-
-    return [x,z,y];
-}
-
-function getNrm(alfa,beta){
-    var delta=0.001;
-    var p1=getPos(alfa,beta);
-    var p2=getPos(alfa,beta+delta);
-    var p3=getPos(alfa+delta,beta);
-
-    var v1=glMatrix.vec3.fromValues(p2[0]-p1[0],p2[1]-p1[1],p2[2]-p1[2]);
-    var v2=glMatrix.vec3.fromValues(p3[0]-p1[0],p3[1]-p1[1],p3[2]-p1[2]);
-
-    glMatrix.vec3.normalize(v1,v1);
-    glMatrix.vec3.normalize(v2,v2);
-
-    var n=glMatrix.vec3.create();
-    glMatrix.vec3.cross(n,v2,v1);
-    return n;
-}
-
-class Torre extends Object3D {
-
-    constructor() {
-
+    constructor(path) {
         let pos = [];
         let normal=[];
-        let rows=50;
-        let cols=50;
+
+        let positions = path.getPathPosition();
+        let normals = path.getPathNormals();
+
+        let rows = positions.length;
+        let cols = 20;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){
+                let p = positions[i];
+                let u=j/(cols-1);
+                let theta = 2*Math.PI*u;
 
-                let alfa=j/(cols-1);
-                let beta=(i/(rows-1));
+                let mat = glMatrix.mat4.create();
+                glMatrix.mat4.rotate(mat, mat, theta, [0,1,0]);
+                glMatrix.mat4.translate(mat, mat, [p.x, p.y, p.z]);
 
-                let p=getPos(alfa,beta);
+                let position = glMatrix.vec3.create();
+                glMatrix.mat4.getTranslation(position, mat);
 
-                pos.push(p[0]);
-                pos.push(p[1]);
-                pos.push(p[2]);
+                pos.push(position[0]);
+                pos.push(position[1]);
+                pos.push(position[2]);
 
-                let n=getNrm(alfa,beta);
+                let n = normals[i];
 
-                normal.push(n[0]);
-                normal.push(n[1]);
-                normal.push(n[2]);
+                mat = glMatrix.mat4.create();
+                glMatrix.mat4.rotate(mat, mat, theta, [0,1,0]);
+                glMatrix.mat4.translate(mat, mat, [n[0], n[1], n[2]]);
+
+                let norm = glMatrix.vec3.create();
+                glMatrix.mat4.getTranslation(norm, mat);
+                glMatrix.vec3.normalize(norm, norm);
+
+                normal.push(norm[0]);
+                normal.push(norm[1]);
+                normal.push(norm[2]);
             }
-
         }
 
         let trianglesVerticeBuffer = gl.createBuffer();
@@ -101,12 +83,6 @@ class Torre extends Object3D {
         super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
     }
 
-    init(){
-        let almena = new Almena();
-        almena.init();
-        this.addChild(almena);
-    }
-
 }
 
-export {Torre}
+export {RevolutionCurve}

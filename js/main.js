@@ -1,4 +1,3 @@
-import {Terreno} from "./objetos3D/Terreno.js";
 import {Escena} from "./objetos3D/Escena.js";
 
 let mat4=glMatrix.mat4;
@@ -52,7 +51,7 @@ function setupWebGL(){
 
     mat4.identity(viewMatrix);
     mat4.rotate(viewMatrix,viewMatrix, 0.5,[1.0, 0.0, 0.0])
-    mat4.translate(viewMatrix,viewMatrix, [0.0, -1., -2]);
+    mat4.translate(viewMatrix,viewMatrix, [0.0, -1, -1.5]);
 
     escena = new Escena();
     escena.init();
