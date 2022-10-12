@@ -57,7 +57,7 @@ function getCurve(controlPoints, delta){
 
     let points = [];
 
-    for (let u=0; u<=1; u=u+delta){
+    for (let u=0.000001; u<=1; u=u+delta){
         let point = cubicCurve(u, controlPoints);
 
         points.push(point);
@@ -70,7 +70,7 @@ function getNormalCurve(controlPoints, delta){
 
     let points = [];
 
-    for (let u=0; u<=1; u=u+delta){
+    for (let u=0.000001; u<=1; u=u+delta){
         let point = cubicNormalZ(u, controlPoints);
 
         points.push(point);
