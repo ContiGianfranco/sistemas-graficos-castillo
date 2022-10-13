@@ -1,4 +1,4 @@
-import {getCurve, getNormalCurve, getTangentCurve} from "./curva_bezier.js";
+import {getCurve, getNormalCurve, getTangentCurve} from "./bezier_curve.js";
 
 class Path{
     constructor(segments, delta) {

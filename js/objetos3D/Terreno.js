@@ -1,5 +1,5 @@
 import {Path} from "../curvas/Path.js";
-import {RevolutionCurve} from "../curvas/RevolutionCurve.2.js";
+import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 
 class Terreno extends RevolutionCurve {
 

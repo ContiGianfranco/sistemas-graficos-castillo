@@ -1,4 +1,4 @@
-import {Escena} from "./objetos3D/Escena.js";
+import {Scene} from "./objetos3D/Scene.js";
 
 let mat4=glMatrix.mat4;
 
@@ -53,7 +53,7 @@ function setupWebGL(){
     mat4.rotate(viewMatrix,viewMatrix, 0.6,[1.0, 0.0, 0.0])
     mat4.translate(viewMatrix,viewMatrix, [0.0, -1, -2]);
 
-    escena = new Escena();
+    escena = new Scene();
     escena.init();
 }
 
