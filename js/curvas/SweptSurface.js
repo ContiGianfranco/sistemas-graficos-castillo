@@ -12,13 +12,13 @@ class SweptSurface extends Object3D {
         let pathTangents = path.getPathTangents();
 
         let shapePositions = shape.getPathPosition();
+        let shapeNormals = shape.getPathNormals();
 
         let rows = shapePositions.length;
         let cols = pathPositions.length;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){
-                let shapeNormals = shape.getPathNormals();
 
                 let pathPosition = pathPositions[j];
 
@@ -55,7 +55,7 @@ class SweptSurface extends Object3D {
                 pos.push(shapePosition[1]);
                 pos.push(shapePosition[2]);
 
-                let shapeNormal = shapeNormals[i];
+                let shapeNormal = glMatrix.vec3.clone(shapeNormals[i]);
 
                 glMatrix.vec3.transformMat4(shapeNormal, shapeNormal, rMat);
 
