@@ -10,7 +10,7 @@ class MurallaCompleta extends Object3D {
     }
 
     init(){
-        let n = 5;
+        let n = 6;
         let alfa = 0;
         for (let i=0;i<n;i++){
             let tramo = new TramoMuralla();

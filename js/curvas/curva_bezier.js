@@ -85,4 +85,17 @@ function getNormalCurve(controlPoints, delta){
     return points;
 }
 
-export {cubicCurve, getCurve, getNormalCurve}
+function getTangentCurve(controlPoints, delta){
+
+    let points = [];
+
+    for (let u=0; u<=1; u=u+delta){
+        let point = cubicDer(u, controlPoints);
+
+        points.push(point);
+    }
+
+    return points;
+}
+
+export {cubicCurve, getCurve, getNormalCurve, getTangentCurve}

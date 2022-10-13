@@ -1,4 +1,4 @@
-import {getCurve, getNormalCurve} from "./curva_bezier.js";
+import {getCurve, getNormalCurve, getTangentCurve} from "./curva_bezier.js";
 
 class Path{
     constructor(segments, delta) {
@@ -24,6 +24,16 @@ class Path{
         }
 
         return normals;
+    }
+
+    getPathTangents(){
+        let tangents = [];
+
+        for (let i=0; i < this.segments.length; i++){
+            tangents = tangents.concat(getTangentCurve(this.segments[i], this.delta));
+        }
+
+        return tangents;
     }
 }
 
