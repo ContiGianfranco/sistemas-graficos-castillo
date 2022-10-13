@@ -12,41 +12,41 @@ class SweptSurface extends Object3D {
         let pathTangents = path.getPathTangents();
 
         let shapePositions = shape.getPathPosition();
-        let shapeNormals = shape.getPathNormals();
 
-        let cols = shapePositions.length;
-        let rows = pathPositions.length;
+        let rows = shapePositions.length;
+        let cols = pathPositions.length;
 
         for (let i=0;i<rows;i++){
+            for (let j=0;j<cols;j++){
+                let shapeNormals = shape.getPathNormals();
 
-            let pathPosition = pathPositions[i];
+                let pathPosition = pathPositions[j];
 
-            let pathNormal = pathNormals[i];
-            glMatrix.vec3.normalize(pathNormal, pathNormal);
+                let pathNormal = pathNormals[j];
+                glMatrix.vec3.normalize(pathNormal, pathNormal);
 
-            let pathTangent = glMatrix.vec3.fromValues(pathTangents[i].x, pathTangents[i].y, pathTangents[i].z);
-            glMatrix.vec3.normalize(pathTangent, pathTangent);
+                let pathTangent = glMatrix.vec3.fromValues(pathTangents[j].x, pathTangents[j].y, pathTangents[j].z);
+                glMatrix.vec3.normalize(pathTangent, pathTangent);
 
-            let pathBinormal = glMatrix.vec3.create();
-            glMatrix.vec3.cross(pathBinormal, pathTangent, pathNormal);
-            glMatrix.vec3.normalize(pathBinormal, pathBinormal);
+                let pathBinormal = glMatrix.vec3.create();
+                glMatrix.vec3.cross(pathBinormal, pathTangent, pathNormal);
+                glMatrix.vec3.normalize(pathBinormal, pathBinormal);
 
-            let mat = glMatrix.mat4.fromValues(
-                pathBinormal[0], pathBinormal[1], pathBinormal[2], 0,
-                pathNormal[0], pathNormal[1], pathNormal[2], 0,
-                pathTangent[0], pathTangent[1], pathTangent[2], 0,
-                pathPosition.x, pathPosition.y, pathPosition.z, 1
+                let mat = glMatrix.mat4.fromValues(
+                    pathBinormal[0], pathBinormal[1], pathBinormal[2], 0,
+                    pathNormal[0], pathNormal[1], pathNormal[2], 0,
+                    pathTangent[0], pathTangent[1], pathTangent[2], 0,
+                    pathPosition.x, pathPosition.y, pathPosition.z, 1
                 )
 
-            let rMat = glMatrix.mat4.fromValues(
-                pathBinormal[0], pathBinormal[1], pathBinormal[2], 0,
-                pathNormal[0], pathNormal[1], pathNormal[2], 0,
-                pathTangent[0], pathTangent[1], pathTangent[2], 0,
-                0, 0, 0, 1
-            )
+                let rMat = glMatrix.mat4.fromValues(
+                    pathBinormal[0], pathBinormal[1], pathBinormal[2], 0,
+                    pathNormal[0], pathNormal[1], pathNormal[2], 0,
+                    pathTangent[0], pathTangent[1], pathTangent[2], 0,
+                    0, 0, 0, 1
+                )
 
-            for (let j=0;j<cols;j++){
-                let vector = shapePositions[j];
+                let vector = shapePositions[i];
                 let shapePosition = glMatrix.vec3.fromValues(vector.x, vector.y, vector.z);
 
                 glMatrix.vec3.transformMat4(shapePosition, shapePosition, mat);
@@ -55,7 +55,7 @@ class SweptSurface extends Object3D {
                 pos.push(shapePosition[1]);
                 pos.push(shapePosition[2]);
 
-                let shapeNormal = shapeNormals[j];
+                let shapeNormal = shapeNormals[i];
 
                 glMatrix.vec3.transformMat4(shapeNormal, shapeNormal, rMat);
 
