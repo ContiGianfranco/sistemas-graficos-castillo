@@ -15,7 +15,8 @@ let projMatrix = mat4.create();
 let escena = null;
 
 let app = {
-    'castleSides': 5
+    'castleSides': 5,
+    'doorAngle': Math.PI/3,
 }
 
 function initWebGL(){
@@ -138,7 +139,8 @@ function GUI (){
     // definimos una carpeta comandos en la variable f1
     let f1 = gui.addFolder('Castillo');
 
-    f1.add(app, 'castleSides',4,8).name("Lados de la muralla").step(1).onChange(reloadScene)
+    f1.add(app, 'castleSides',4,8).name("Lados muralla").step(1).onChange(reloadScene)
+    f1.add(app, 'doorAngle',0,Math.PI/2).name("Entrada").step(0.001).onChange(reloadScene)
 
     f1.open(); // hace que la carpeta f1 inicie abierta
 

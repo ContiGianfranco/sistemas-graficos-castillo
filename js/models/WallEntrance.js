@@ -2,6 +2,7 @@ import {Cube} from "../objetos3D/Cube.js";
 import {Object3D} from "../objetos3D/Object3D.js";
 import {Wall} from "./Wall.js";
 import {Door} from "./WallDoor.js";
+import {app} from "../main.js";
 
 class WallEntrance extends Object3D {
 
@@ -31,7 +32,7 @@ class WallEntrance extends Object3D {
         this.addChild(wall);
 
 
-        let alfa = 3.14/4;
+        let alfa = app.doorAngle;
         let door = new Door();
         door.rotar(alfa, [1,0,0])
         this.addChild(door);
