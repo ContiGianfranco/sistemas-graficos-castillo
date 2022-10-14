@@ -1,5 +1,7 @@
 import {Object3D} from "./Object3D.js";
 import {TramoMuralla} from "./TramoMuralla.js";
+import {WallEntranceSection} from "../models/WallEntranceSection.js";
+import {app} from "../main.js";
 
 
 class MurallaCompleta extends Object3D {
@@ -10,16 +12,24 @@ class MurallaCompleta extends Object3D {
     }
 
     init(){
-        let n = 5;
+        let n = app.castleSides;
         let alfa = 0;
-        for (let i=0;i<n;i++){
-            let tramo = new TramoMuralla();
-            tramo.init();
-            tramo.rotar(alfa, [0.0,1.0,0.0])
+
+        let section = new WallEntranceSection();
+        section.rotar(alfa, [0.0,1.0,0.0])
+        let d = 0.5/(Math.tan(Math.PI/n));
+        section.trasladar([d,0.0,0.0]);
+        this.addChild(section);
+        alfa += 2*Math.PI/n;
+
+        for (let i=0;i<n-1;i++){
+            section = new TramoMuralla();
+            section.init();
+            section.rotar(alfa, [0.0,1.0,0.0])
             let d = 0.5/(Math.tan(Math.PI/n));
-            tramo.trasladar([d,0.0,0.0]);
-            this.addChild(tramo);
-            alfa += 2*Math.PI/n
+            section.trasladar([d,0.0,0.0]);
+            this.addChild(section);
+            alfa += 2*Math.PI/n;
         }
     }
 

@@ -14,6 +14,9 @@ let projMatrix = mat4.create();
 
 let escena = null;
 
+let app = {
+    'castleSides': 5
+}
 
 function initWebGL(){
 
@@ -28,6 +31,7 @@ function initWebGL(){
     if(gl) {
 
         setupWebGL();
+        GUI();
         initShaders();
         setupVertexShaderMatrix();
         tick();
@@ -53,6 +57,10 @@ function setupWebGL(){
     mat4.rotate(viewMatrix,viewMatrix, 0.6,[1.0, 0.0, 0.0])
     mat4.translate(viewMatrix,viewMatrix, [0.0, -1, -2]);
 
+    reloadScene();
+}
+
+function reloadScene(){
     escena = new Scene();
     escena.init();
 }
@@ -120,6 +128,19 @@ function tick(){
     animate();
 }
 
+function GUI (){
+
+    let gui = new dat.GUI();
+
+    // definimos una carpeta comandos en la variable f1
+    let f1 = gui.addFolder('Castillo');
+
+    f1.add(app, 'castleSides',4,8).name("Lados de la muralla").step(1).onChange(reloadScene)
+
+    f1.open(); // hace que la carpeta f1 inicie abierta
+
+}
+
 window.onload=initWebGL;
 
-export {gl, glProgram}
+export {gl, glProgram, app}
