@@ -5,18 +5,16 @@ import {Wall} from "../models/Wall.js";
 
 class TramoMuralla extends Object3D {
 
-    constructor() {
-
+    constructor(scale) {
         super(null,null,null);
-    }
 
-    init(){
         let muralla = new Wall();
         muralla.rotar(Math.PI/2, [0,1,0]);
+        muralla.escalar([scale, 1, 1])
         this.addChild(muralla);
 
         let torre = new Tower();
-        torre.trasladar([0.0,0.0,.5]);
+        torre.trasladar([0.0,0.0,scale/2]);
         this.addChild(torre);
     }
 
