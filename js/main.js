@@ -67,6 +67,7 @@ function setupWebGL(){
 function reloadScene(){
     escena = new Scene();
     escena.init();
+    escena.rotar(-Math.PI/2,[0,1,0])
 }
 
 function initShaders(){
