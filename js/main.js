@@ -1,4 +1,5 @@
-import {Scene} from "./objetos3D/Scene.js";
+import {Scene} from "./object3D/Scene.js";
+import {Camara} from "./camara/Camara.js";
 
 let mat4=glMatrix.mat4;
 
@@ -57,9 +58,7 @@ function setupWebGL(){
     // Matrix de Proyeccion Perspectiva
     mat4.perspective(projMatrix,45, canvas.width / canvas.height, 0.1, 100.0);
 
-    mat4.identity(viewMatrix);
-    mat4.rotate(viewMatrix,viewMatrix, 0.6,[1.0, 0.0, 0.0])
-    mat4.translate(viewMatrix,viewMatrix, [0.0, -1, -2]);
+    window.camara = new Camara(canvas, viewMatrix)
 
     reloadScene();
 }
@@ -123,14 +122,21 @@ function drawScene(){
     escena.draw(m1, m2);
 }
 
+function updateCamara(){
+    window.camara.setViewMatrix(viewMatrix);
+    let viewMatrixUniform  = gl.getUniformLocation(glProgram, "viewMatrix");
+    gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
+}
+
 function animate(){
-    escena.rotar(0.01,[0.0, 1.0, 0.0]);
+    //escena.rotar(0.01,[0.0, 1.0, 0.0]);
 }
 
 function tick(){
     requestAnimationFrame(tick);
     drawScene();
     animate();
+    updateCamara();
 }
 
 function GUI (){

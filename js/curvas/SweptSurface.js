@@ -1,4 +1,4 @@
-import {Object3D} from "../objetos3D/Object3D.js";
+import {Object3D} from "../object3D/Object3D.js";
 import {gl} from "../main.js";
 
 class SweptSurface extends Object3D {

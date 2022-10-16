@@ -1,5 +1,5 @@
-import {Cube} from "../objetos3D/Cube.js";
-import {Object3D} from "../objetos3D/Object3D.js";
+import {Cube} from "../object3D/Cube.js";
+import {Object3D} from "../object3D/Object3D.js";
 import {Wall} from "./Wall.js";
 import {Door} from "./WallDoor.js";
 import {app} from "../main.js";

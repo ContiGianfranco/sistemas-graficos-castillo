@@ -1,6 +1,6 @@
 import {Tower} from "./Tower.js"
 import {WallEntrance} from "./WallEntrance.js";
-import {Object3D} from "../objetos3D/Object3D.js";
+import {Object3D} from "../object3D/Object3D.js";
 
 
 class WallEntranceSection extends Object3D {

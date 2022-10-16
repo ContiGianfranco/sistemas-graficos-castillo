@@ -1,4 +1,4 @@
-import {Object3D} from "../objetos3D/Object3D.js";
+import {Object3D} from "../object3D/Object3D.js";
 import {CastleTowerMainBody} from "./CastleTowerMainBody.js";
 import {CastleTowerRoof} from "./CastleTowerRoof.js";
 
