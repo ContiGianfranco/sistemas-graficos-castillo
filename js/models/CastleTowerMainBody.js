@@ -1,5 +1,6 @@
 import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
+import colors from "../constants/colors.js";
 
 class CastleTowerMainBody extends RevolutionCurve {
 
@@ -13,6 +14,8 @@ class CastleTowerMainBody extends RevolutionCurve {
         let path = new Path(controlPoints, 0.1);
 
         super(path);
+
+        this.color = colors.khaki;
     }
 
 }

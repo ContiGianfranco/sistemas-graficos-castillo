@@ -18,6 +18,7 @@ let escena = null;
 let app = {
     'castleSides': 5,
     'doorAngle': Math.PI/3,
+    'shaderMode': 'Default',
 }
 
 function initWebGL(){
@@ -58,7 +59,7 @@ function setupWebGL(){
     // Matrix de Proyeccion Perspectiva
     mat4.perspective(projMatrix,45, canvas.width / canvas.height, 0.1, 100.0);
 
-    window.camara = new Camara(canvas, viewMatrix)
+    window.camara = new Camara(canvas, viewMatrix);
 
     reloadScene();
 }
@@ -92,6 +93,8 @@ function initShaders(){
 
     //use program
     gl.useProgram(glProgram);
+
+    setUpShaderMode();
 }
 
 function makeShader(src, type){
@@ -122,6 +125,20 @@ function drawScene(){
     escena.draw(m1, m2);
 }
 
+function setUpShaderMode() {
+    if (app.shaderMode === 'Default') {
+        setUniformUnsignedInteger("shaderMode", 1)
+    } else {
+        setUniformUnsignedInteger("shaderMode", 0)
+    }
+
+}
+
+function setUniformUnsignedInteger(key, value) {
+    let tmp  = gl.getUniformLocation(glProgram, key);
+    gl.uniform1i(tmp, value);
+}
+
 function updateCamara(){
     window.camara.setViewMatrix(viewMatrix);
     let viewMatrixUniform  = gl.getUniformLocation(glProgram, "viewMatrix");
@@ -150,6 +167,10 @@ function GUI (){
     f1.add(app, 'doorAngle',0,Math.PI/2).name("Entrada").step(0.001).onChange(reloadScene)
 
     f1.open(); // hace que la carpeta f1 inicie abierta
+
+    let f2 = gui.addFolder('Rendering');
+
+    f2.add(app, 'shaderMode', ['Default', 'Normales']).name("Render mode").onChange(setUpShaderMode)
 
 }
 

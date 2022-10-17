@@ -1,5 +1,6 @@
 import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
+import colors from "../constants/colors.js";
 
 class Tower extends RevolutionCurve {
 
@@ -15,6 +16,8 @@ class Tower extends RevolutionCurve {
         let path = new Path(controlPoints, 0.1);
 
         super(path);
+
+        this.color = colors.stoneGrey;
     }
 
 }

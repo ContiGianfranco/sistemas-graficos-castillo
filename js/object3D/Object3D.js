@@ -10,10 +10,6 @@ class Object3D {
         this.modelMatrix=glMatrix.mat4.create();
         this.normalMatrix=glMatrix.mat4.create();
 
-        this.position=glMatrix.vec3.create();
-        this.rotate=glMatrix.vec3.create();
-        this.scale=glMatrix.vec3.create();
-
         this.childes=[];
     }
 
@@ -32,6 +28,10 @@ class Object3D {
         gl.uniformMatrix4fv(normalMatrixUniform, false, normalMatrix);
 
         if (this.vertexBuffer && this.indexBuffer && this.normalBuffer){
+            if (this.color){
+                gl.uniform3f(gl.getUniformLocation(glProgram, "uColor"), this.color[0], this.color[1], this.color[2]);
+            }
+
             let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
             gl.enableVertexAttribArray(vertexPositionAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);

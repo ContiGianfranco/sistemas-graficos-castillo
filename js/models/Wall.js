@@ -1,5 +1,6 @@
 import {Path} from "../curvas/Path.js";
 import {SweptSurface} from "../curvas/SweptSurface.js";
+import colors from "../constants/colors.js";
 
 class Wall extends SweptSurface {
 
@@ -24,6 +25,8 @@ class Wall extends SweptSurface {
         let path = new Path(controlPoints2, 0.1);
 
         super(shape, path);
+
+        this.color = colors.stoneGrey;
     }
 
 }

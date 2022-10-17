@@ -12,7 +12,7 @@ function getPos(u,v,length, high){
 
 class Plane extends Object3D {
 
-    constructor(length, high) {
+    constructor(length, high, color) {
         let pos = [];
         let normal=[];
 
@@ -73,6 +73,7 @@ class Plane extends Object3D {
         trianglesIndexBuffer.numItems = index.length;
 
         super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
+        this.color = color;
     }
 
 }
