@@ -10,16 +10,18 @@ class WallEntrance extends Object3D {
     constructor() {
         super(null,null,null);
 
-        let side = new Cube(1/15,0.28,0.11, colors.stoneGrey);
-        side.trasladar([-2/15,0.28/2,0])
+        let h = app.wallHigth*0.7;
+
+        let side = new Cube(1/15,h,0.11, colors.stoneGrey);
+        side.trasladar([-2/15,h/2,0])
         this.addChild(side)
 
-        side = new Cube(1/15,0.28,0.11, colors.stoneGrey);
-        side.trasladar([2/15,0.28/2,0])
+        side = new Cube(1/15,h,0.11, colors.stoneGrey);
+        side.trasladar([2/15,h/2,0])
         this.addChild(side)
 
         let top = new Cube(1/3,1/15,0.11, colors.stoneGrey);
-        top.trasladar([0,0.28,0])
+        top.trasladar([0,h+0.025,0])
         this.addChild(top)
 
         let wall = new Wall();

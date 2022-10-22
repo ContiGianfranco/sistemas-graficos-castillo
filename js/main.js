@@ -19,6 +19,10 @@ let app = {
     'castleSides': 5,
     'doorAngle': Math.PI/3,
     'shaderMode': 'Default',
+    'wallHigth': 0.4,
+    'width': 0.7,
+    'length': 0.7,
+    'floors': 3,
 }
 
 function initWebGL(){
@@ -164,7 +168,12 @@ function GUI (){
     let f1 = gui.addFolder('Castillo');
 
     f1.add(app, 'castleSides',4,8).name("Lados muralla").step(1).onChange(reloadScene)
-    f1.add(app, 'doorAngle',0,Math.PI/2).name("Entrada").step(0.001).onChange(reloadScene)
+    f1.add(app, 'wallHigth',0.2,1.8).name("Altura muralla").step(0.1).onChange(reloadScene)
+    f1.add(app, 'doorAngle',0,Math.PI/2).name("Entrada").step(0.01).onChange(reloadScene)
+
+    f1.add(app, 'floors',1,4).name("Numero de pisos").step(1).onChange(reloadScene)
+    f1.add(app, 'width',0.2,1).name("Ancho").step(0.1).onChange(reloadScene)
+    f1.add(app, 'length',0.2,1).name("Largo").step(0.1).onChange(reloadScene)
 
     f1.open(); // hace que la carpeta f1 inicie abierta
 

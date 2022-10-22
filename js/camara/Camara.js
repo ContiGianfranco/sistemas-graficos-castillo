@@ -14,15 +14,13 @@ class Camara{
             this.pressedKeys.delete(String.fromCharCode(event.keyCode));
         }
         window.onkeypress = (event) => {
-            if (String.fromCharCode(event.keyCode) !== 'c') return;
-            if (this.mode === 'first_person') {
+            if (String.fromCharCode(event.keyCode) === '1') {
                 this.mode = 'general';
-            } else if (this.mode === 'general') {
-                this.mode = 'first_person';
-            } else {
-                this.mode = 'first_person';
+                this.setDefaults();
+            } else if (String.fromCharCode(event.keyCode) === '3') {
+                this.mode = 'first_person'
+                this.setDefaults();
             }
-            this.setDefaults();
         }
 
         canvas.onmousedown = (event) => {
@@ -97,7 +95,7 @@ class Camara{
         }
     }
 
-    updateOrbitalRadius() {
+    updateOrbital() {
         this.orbitalRadius += this.offset('W', 'S') * this.step;
 
         if (this.orbitalRadius < this.minOrbitalRadius) {
@@ -135,21 +133,13 @@ class Camara{
         this.offsetZ += z * this.step;
     }
 
-    tangent(matrix) {
-        return matrix.slice(8, 11);
-    }
-
-    position(matrix) {
-        return matrix.slice(12, 15);
-    }
-
     updateEye() {
         this.eye = glMatrix.mat4.create();
 
         if (this.mode === 'first_person') {
             this.updateOffsets();
         } else {
-            this.updateOrbitalRadius();
+            this.updateOrbital();
         }
 
         glMatrix.mat4.translate(this.eye, this.eye, [this.offsetX, this.offsetY, this.offsetZ])
@@ -160,10 +150,10 @@ class Camara{
     setViewMatrix(viewMatrix) {
         this.updateEye();
 
-        let eyePosition = this.position(this.eye);
-        let eyeTangent = this.tangent(this.eye);
+        let eyePosition = this.eye.slice(12, 15);
+        let eyeTangent = this.eye.slice(8, 11);
 
-        let centerPosition = [
+        let center = [
             eyePosition[0] - eyeTangent[0],
             eyePosition[1] - eyeTangent[1],
             eyePosition[2] - eyeTangent[2],
@@ -173,20 +163,22 @@ class Camara{
             glMatrix.mat4.lookAt(
                 viewMatrix,
                 eyePosition,
-                centerPosition,
+                center,
                 [0, 1, 0]
             )
         } else {
             let eye = glMatrix.mat4.create();
 
             glMatrix.mat4.translate(eye, eye, [this.offsetX, this.offsetY, this.offsetZ]);
+
             glMatrix.mat4.rotateY(eye, eye, this.xAngle);
             glMatrix.mat4.rotateX(eye, eye, this.yAngle);
+
             glMatrix.mat4.translate(eye, eye, [0, 0, this.orbitalRadius]);
 
             glMatrix.mat4.lookAt(
                 viewMatrix,
-                this.position(eye),
+                eye.slice(12, 15),
                 [this.offsetX, this.offsetY, this.offsetZ],
                 [0, 1, 0]
             )

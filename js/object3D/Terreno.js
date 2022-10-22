@@ -1,6 +1,7 @@
 import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from '../constants/colors.js';
+import {Plane} from "./Plane.js";
 
 class Terreno extends RevolutionCurve {
 
@@ -16,6 +17,10 @@ class Terreno extends RevolutionCurve {
         super(path);
 
         this.color = colors.grassGreen;
+
+        let water = new Plane(3,3, colors.brightBlue);
+        water.trasladar([0,-0.05,0])
+        this.addChild(water)
     }
 }
 

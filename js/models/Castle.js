@@ -1,13 +1,17 @@
 import {Object3D} from "../object3D/Object3D.js";
 import {Floor} from "./Floor.js";
 import {CastleTower} from "./CastleTower.js";
+import {app} from "../main.js";
 
 class Castle extends Object3D {
 
     constructor() {
         super(null,null,null);
 
-        let n = 3;
+        let w = app.width;
+        let l = app.length;
+
+        let n = app.floors;
 
         for (let i=0; i<n; i++){
             let floor = new Floor();
@@ -19,7 +23,7 @@ class Castle extends Object3D {
         for (let i=0; i<2; i++){
             for (let j=0; j<2; j++){
                 let tower = new CastleTower();
-                tower.trasladar([-0.35+0.7*i, 0, -0.35+0.7*j]);
+                tower.trasladar([-l/2+l*i, 0, -w/2+w*j]);
                 this.addChild(tower);
             }
         }
