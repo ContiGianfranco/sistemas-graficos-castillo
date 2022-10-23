@@ -1,9 +1,9 @@
 import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from '../constants/colors.js';
-import {Plane} from "./Plane.js";
+import {Plane} from "../object3D/Plane.js";
 
-class Terreno extends RevolutionCurve {
+class Terrain extends RevolutionCurve {
 
     constructor() {
 
@@ -24,4 +24,4 @@ class Terreno extends RevolutionCurve {
     }
 }
 
-export {Terreno}
+export {Terrain}

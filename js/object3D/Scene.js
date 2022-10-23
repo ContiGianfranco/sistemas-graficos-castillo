@@ -1,6 +1,6 @@
 import {Object3D} from "./Object3D.js";
-import {Terreno} from "./Terreno.js";
-import {MurallaCompleta} from "./MurallaCompleta.js";
+import {Terrain} from "../models/Terrain.js";
+import {FullWall} from "../models/FullWall.js";
 import {Castle} from "../models/Castle.js";
 
 class Scene extends Object3D {
@@ -10,10 +10,10 @@ class Scene extends Object3D {
     }
 
     init(){
-        let terreno = new Terreno();
+        let terreno = new Terrain();
         this.addChild(terreno);
 
-        let muralla = new MurallaCompleta();
+        let muralla = new FullWall();
         muralla.init();
         this.addChild(muralla);
 

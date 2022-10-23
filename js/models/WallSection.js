@@ -1,9 +1,9 @@
-import {Object3D} from "./Object3D.js";
-import {Tower} from "../models/Tower.js";
-import {Wall} from "../models/Wall.js";
+import {Object3D} from "../object3D/Object3D.js";
+import {Tower} from "./Tower.js";
+import {Wall} from "./Wall.js";
 
 
-class TramoMuralla extends Object3D {
+class WallSection extends Object3D {
 
     constructor(scale) {
         super(null,null,null);
@@ -20,4 +20,4 @@ class TramoMuralla extends Object3D {
 
 }
 
-export {TramoMuralla}
+export {WallSection}

@@ -1,10 +1,10 @@
-import {Object3D} from "./Object3D.js";
-import {TramoMuralla} from "./TramoMuralla.js";
-import {WallEntranceSection} from "../models/WallEntranceSection.js";
+import {Object3D} from "../object3D/Object3D.js";
+import {WallSection} from "./WallSection.js";
+import {WallEntranceSection} from "./WallEntranceSection.js";
 import {app} from "../main.js";
 
 
-class MurallaCompleta extends Object3D {
+class FullWall extends Object3D {
 
     constructor() {
 
@@ -24,7 +24,7 @@ class MurallaCompleta extends Object3D {
         alfa += 2*Math.PI/n;
 
         for (let i=0;i<n-1;i++){
-            section = new TramoMuralla(scale);
+            section = new WallSection(scale);
             section.rotar(alfa, [0.0,1.0,0.0])
             section.trasladar([r,0.0,0.0]);
             this.addChild(section);
@@ -34,4 +34,4 @@ class MurallaCompleta extends Object3D {
 
 }
 
-export {MurallaCompleta}
+export {FullWall}
