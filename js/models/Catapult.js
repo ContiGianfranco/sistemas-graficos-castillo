@@ -36,7 +36,7 @@ class Catapult extends Object3D {
             this.childes[0].animate(time);
         } else {
             this.childes[0].animate(1);
-            if (this.route.length >= this.routePos){
+            if (this.route.length > this.routePos){
                 let sphere = new Sphere(0.05, colors.stoneGrey);
                 let pos = this.route[this.routePos];
                 sphere.trasladar([pos.x, pos.y, pos.z])
