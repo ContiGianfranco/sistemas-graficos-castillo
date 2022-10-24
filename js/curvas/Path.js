@@ -1,4 +1,4 @@
-import {getCurve, getNormalCurve, getTangentCurve} from "./bezier_curve.js";
+import {getCurve, getNormalCurve, getQuadraticCurve, getTangentCurve} from "./bezier_curve.js";
 
 class Path{
     constructor(segments, delta) {
@@ -10,7 +10,11 @@ class Path{
         let positions = [];
 
         for (let i=0; i < this.segments.length; i++){
-            positions = positions.concat(getCurve(this.segments[i], this.delta));
+            if (this.segments[i].length===3){
+                positions = positions.concat(getQuadraticCurve(this.segments[i], this.delta));
+            } else {
+                positions = positions.concat(getCurve(this.segments[i], this.delta));
+            }
         }
 
         return positions;

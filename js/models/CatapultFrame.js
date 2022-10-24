@@ -9,7 +9,7 @@ class CatapultFrame extends Object3D {
     constructor() {
         super(null, null, null);
 
-        let arm = new CatapultArm();
+        let arm = new CatapultArm(0);
         this.addChild(arm)
 
         let suport = new Cylinder(0.25,0.019,colors.black);
@@ -29,6 +29,11 @@ class CatapultFrame extends Object3D {
         this.alfa = Math.PI/4
     }
 
+    animate(time){
+        let arm = new CatapultArm(time*this.alfa);
+        arm.rotar(time*this.alfa, [1,0,0]);
+        this.childes[0] = arm;
+    }
 }
 
 export {CatapultFrame}

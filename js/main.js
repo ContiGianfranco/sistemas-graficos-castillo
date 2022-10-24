@@ -15,6 +15,9 @@ let projMatrix = mat4.create();
 
 let escena = null;
 
+let time = 0;
+let isAnimated = false;
+
 let app = {
     'castleSides': 5,
     'doorAngle': Math.PI/3,
@@ -24,6 +27,9 @@ let app = {
     'length': 0.7,
     'floors': 3,
     'catapult': 3.9,
+    'animate': function(){
+        isAnimated=true;
+    }
 }
 
 function initWebGL(){
@@ -151,13 +157,22 @@ function updateCamara(){
 }
 
 function animate(){
-    //escena.rotar(0.01,[0.0, 1.0, 0.0]);
+    if (time>=10){
+        time=0;
+        isAnimated = false;
+    } else {
+        time+=0.15;
+    }
+
+    escena.animate(time)
 }
 
 function tick(){
     requestAnimationFrame(tick);
     drawScene();
-    animate();
+    if (isAnimated){
+        animate();
+    }
     updateCamara();
 }
 
@@ -176,11 +191,10 @@ function GUI (){
     f1.add(app, 'width',0.2,1).name("Ancho").step(0.1).onChange(reloadScene)
     f1.add(app, 'length',0.2,1).name("Largo").step(0.1).onChange(reloadScene)
 
-    f1.open(); // hace que la carpeta f1 inicie abierta
-
     let f2 = gui.addFolder('Catapulta');
 
     f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(reloadScene)
+    f2.add(app, 'animate').name("Disparar");
 
     let f3 = gui.addFolder('Rendering');
 
