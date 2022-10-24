@@ -21,7 +21,7 @@ class Catapult extends Object3D {
         this.addChild(sphere);
 
         let path = new Path([
-            [[0,0.823,-0.195],[0,5,2.5],[0,0,5]]
+            [[0,0.823,-0.195],[0,5,2.5],[0,-1,10]]
         ], 0.05)
         this.route = path.getPathPosition();
         this.routePos = 0;
@@ -36,13 +36,14 @@ class Catapult extends Object3D {
             this.childes[0].animate(time);
         } else {
             this.childes[0].animate(1);
+            if (this.route.length >= this.routePos){
+                let sphere = new Sphere(0.05, colors.stoneGrey);
+                let pos = this.route[this.routePos];
+                sphere.trasladar([pos.x, pos.y, pos.z])
+                this.childes[2] = sphere;
 
-            let sphere = new Sphere(0.05, colors.stoneGrey);
-            let pos = this.route[this.routePos];
-            sphere.trasladar([pos.x, pos.y, pos.z])
-            this.childes[2] = sphere;
-
-            this.routePos += 1
+                this.routePos += 1
+            }
         }
     }
 }
