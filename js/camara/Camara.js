@@ -17,6 +17,9 @@ class Camara{
             if (String.fromCharCode(event.keyCode) === '1') {
                 this.mode = 'general';
                 this.setDefaults();
+            } else if (String.fromCharCode(event.keyCode) === '2') {
+                this.mode = 'catapult'
+                this.setDefaults();
             } else if (String.fromCharCode(event.keyCode) === '3') {
                 this.mode = 'first_person'
                 this.setDefaults();
@@ -65,6 +68,15 @@ class Camara{
             this.offsetX = 0;
             this.offsetY = 0.25;
             this.offsetZ = 0;
+        } else if (this.mode === 'catapult') {
+            this.yAngleUpperLimit =  (1 / 64) * Math.PI;
+            this.yAngleLowerLimit =  - (3 / 8) * Math.PI;
+            this.orbitalRadius = 1;
+            this.maxOrbitalRadius = 10;
+            this.minOrbitalRadius = 0.25;
+            this.offsetX = -2;
+            this.offsetY = 0.05;
+            this.offsetZ = 2;
         }
     }
 

@@ -23,6 +23,7 @@ let app = {
     'width': 0.7,
     'length': 0.7,
     'floors': 3,
+    'catapult': 3.9,
 }
 
 function initWebGL(){
@@ -177,9 +178,13 @@ function GUI (){
 
     f1.open(); // hace que la carpeta f1 inicie abierta
 
-    let f2 = gui.addFolder('Rendering');
+    let f2 = gui.addFolder('Catapulta');
 
-    f2.add(app, 'shaderMode', ['Default', 'Normales']).name("Render mode").onChange(setUpShaderMode)
+    f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(reloadScene)
+
+    let f3 = gui.addFolder('Rendering');
+
+    f3.add(app, 'shaderMode', ['Default', 'Normales']).name("Render mode").onChange(setUpShaderMode)
 
 }
 
