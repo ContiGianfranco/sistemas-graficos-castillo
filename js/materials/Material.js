@@ -1,5 +1,9 @@
 import {gl, glProgram} from "../main.js";
 
+function setUniformFloat(key, value) {
+    let tmp  = gl.getUniformLocation(glProgram, key);
+    gl.uniform1f(tmp, value);
+}
 
 function initTexture(file){
 
@@ -26,11 +30,15 @@ function initTexture(file){
 }
 
 class Material {
-    constructor(path) {
+    constructor(path, uScale, vScale) {
         this.texture = initTexture(path);
+        this.scale = {u: uScale, v: vScale}
     }
 
     apply(){
+        setUniformFloat("uScale", this.scale.u);
+        setUniformFloat("vScale", this.scale.v);
+
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
         gl.uniform1i(glProgram.samplerUniform, 0);
