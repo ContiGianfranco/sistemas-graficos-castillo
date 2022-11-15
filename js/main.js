@@ -93,6 +93,8 @@ function initShaders(){
     //create program
     glProgram = gl.createProgram();
 
+    glProgram.samplerUniform = gl.getUniformLocation(glProgram, "uSampler");
+
     //attach and link shaders to the program
     gl.attachShader(glProgram, vertexShader);
     gl.attachShader(glProgram, fragmentShader);
@@ -139,8 +141,10 @@ function drawScene(){
 function setUpShaderMode() {
     if (app.shaderMode === 'Default') {
         setUniformUnsignedInteger("shaderMode", 1)
-    } else {
+    } else if (app.shaderMode === 'Normales') {
         setUniformUnsignedInteger("shaderMode", 0)
+    } else if (app.shaderMode === 'Texturas'){
+        setUniformUnsignedInteger("shaderMode", 2)
     }
 
 }
@@ -198,7 +202,7 @@ function GUI (){
 
     let f3 = gui.addFolder('Rendering');
 
-    f3.add(app, 'shaderMode', ['Default', 'Normales']).name("Render mode").onChange(setUpShaderMode)
+    f3.add(app, 'shaderMode', ['Default', 'Normales', 'Texturas']).name("Render mode").onChange(setUpShaderMode)
 
 }
 

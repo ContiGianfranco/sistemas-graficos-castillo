@@ -2,10 +2,11 @@ import {gl, glProgram} from "../main.js";
 
 
 class Object3D {
-    constructor(vertexBuffer,indexBuffer,normalBuffer) {
+    constructor(vertexBuffer,indexBuffer,normalBuffer, uvBuffer) {
         this.vertexBuffer=vertexBuffer;
         this.indexBuffer=indexBuffer;
         this.normalBuffer=normalBuffer;
+        this.trianglesUvBuffer = uvBuffer;
 
         this.modelMatrix=glMatrix.mat4.create();
         this.normalMatrix=glMatrix.mat4.create();
@@ -32,6 +33,10 @@ class Object3D {
                 gl.uniform3f(gl.getUniformLocation(glProgram, "uColor"), this.color[0], this.color[1], this.color[2]);
             }
 
+            if (this.material){
+                this.material.apply();
+            }
+
             let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
             gl.enableVertexAttribArray(vertexPositionAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
@@ -41,6 +46,11 @@ class Object3D {
             gl.enableVertexAttribArray(vertexNormalAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
             gl.vertexAttribPointer(vertexNormalAttribute, this.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+            let vertexUvAttribute = gl.getAttribLocation(glProgram, "aVertexUv");
+            gl.enableVertexAttribArray(vertexUvAttribute);
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.trianglesUvBuffer);
+            gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);
 
             gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
             gl.drawElements(gl.TRIANGLE_STRIP, this.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
