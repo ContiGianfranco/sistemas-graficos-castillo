@@ -3,6 +3,7 @@ import {Object3D} from "../object3D/Object3D.js";
 import colors from "../constants/colors.js";
 import {Window} from "./Window.js";
 import {app} from "../main.js";
+import {Material} from "../materials/Material.js";
 
 const windowSpacing = 0.15;
 
@@ -14,7 +15,9 @@ class Floor extends Object3D {
         let w = app.width;
         let l = app.length;
 
-        let floor = new Cube(l,0.19,w, colors.khaki);
+
+        let texture = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 11.0, 5.);
+        let floor = new Cube(l,0.19,w, colors.khaki, texture);
         floor.trasladar([0,0.19/2,0])
         this.addChild(floor)
 

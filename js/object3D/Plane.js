@@ -1,6 +1,5 @@
 import {Object3D} from "./Object3D.js";
 import {gl} from "../main.js";
-import {Material} from "../materials/Material.js";
 
 function getPos(u,v,length, high){
 
@@ -13,10 +12,10 @@ function getPos(u,v,length, high){
 
 class Plane extends Object3D {
 
-    constructor(length, high, color) {
+    constructor(length, high, color, material) {
         let pos = [];
         let normal = [];
-        let uv = []
+        let uv = [];
 
         let rows = 20;
         let cols = 20;
@@ -81,9 +80,9 @@ class Plane extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, trianglesUvBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer);
         this.color = color;
-        this.material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg");
+        this.material = material;
     }
 
 }

@@ -21,7 +21,7 @@ let isAnimated = false;
 let app = {
     'castleSides': 5,
     'doorAngle': Math.PI/3,
-    'shaderMode': 'Default',
+    'shaderMode': 'Texturas',
     'wallHigth': 0.4,
     'width': 0.7,
     'length': 0.7,

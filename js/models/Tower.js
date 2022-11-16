@@ -2,6 +2,7 @@ import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from "../constants/colors.js";
 import {app} from "../main.js";
+import {Material} from "../materials/Material.js";
 
 class Tower extends RevolutionCurve {
 
@@ -21,6 +22,7 @@ class Tower extends RevolutionCurve {
         super(path);
 
         this.color = colors.stoneGrey;
+        this.material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
     }
 
 }

@@ -1,14 +1,38 @@
 import {Object3D} from "../object3D/Object3D.js";
 import {gl} from "../main.js";
 
+function distance(a, b){
+    return Math.sqrt(Math.pow(a.x-b.x,2)+Math.pow(a.y-b.y,2)+Math.pow(a.z-b.z,2));
+}
+
+function getPercent(positions) {
+    let result = [];
+    let length = 0;
+
+    result.push(0);
+
+    for (let i=1;i<positions.length;i++){
+        length += distance(positions[i], positions[i-1]);
+        result.push(length);
+    }
+
+    for (let i=0;i<result.length;i++){
+        result[i] = result[i]/length;
+    }
+
+    return result;
+}
+
 class RevolutionCurve extends Object3D {
 
     constructor(path) {
         let pos = [];
         let normal=[];
+        let uv = [];
 
         let positions = path.getPathPosition();
         let normals = path.getPathNormals();
+        let percent = getPercent(positions);
 
         let rows = positions.length;
         let cols = 50;
@@ -43,6 +67,9 @@ class RevolutionCurve extends Object3D {
                 normal.push(norm[0]);
                 normal.push(norm[1]);
                 normal.push(norm[2]);
+
+                uv.push(u);
+                uv.push(percent[i]);
             }
         }
 
@@ -58,6 +85,10 @@ class RevolutionCurve extends Object3D {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
         trianglesNormalBuffer.itemSize = 3;
         trianglesNormalBuffer.numItems = normal.length / 3;
+
+        let trianglesUvBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 
         let index=[];
 
@@ -80,7 +111,7 @@ class RevolutionCurve extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer);
     }
 
 }

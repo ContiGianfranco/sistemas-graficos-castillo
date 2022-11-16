@@ -3,35 +3,39 @@ import {Plane} from "./Plane.js";
 
 class Cube extends Object3D {
 
-    constructor(length, high, width, color) {
+    constructor(length, high, width, color, material) {
+
+
         super(null,null,null);
-
-        let plane = new Plane(length, high, color);
-        plane.rotar(Math.PI/2, [1,0,0]);
-        plane.trasladar([0,width/2,0]);
-        this.addChild(plane);
-
-        plane = new Plane(length, width, color);
+        let plane = new Plane(length, width, color, material);
         plane.trasladar([0,high/2,0])
-        this.addChild(plane);
 
-        plane = new Plane(length, width, color);
+        this.addChild(plane);
+        plane = new Plane(length, width, color, material);
         plane.rotar(Math.PI, [1,0,0]);
         plane.trasladar([0,high/2,0])
         this.addChild(plane);
 
-        plane = new Plane(length, high, color);
+        plane = new Plane(length, high, color, material);
+        plane.rotar(Math.PI/2, [1,0,0]);
+        plane.trasladar([0,width/2,0]);
+        this.addChild(plane);
+
+        plane = new Plane(length, high, color, material);
         plane.rotar(-Math.PI/2, [1,0,0]);
         plane.trasladar([0,width/2,0])
         this.addChild(plane);
 
-        plane = new Plane(high, width, color);
-        plane.rotar(Math.PI/2, [0,0,1]);
+
+        plane = new Plane(width, high, color, material);
+        plane.rotar(-Math.PI/2, [0,1,0]);
+        plane.rotar(Math.PI/2, [1,0,0]);
         plane.trasladar([0,length/2,0])
         this.addChild(plane);
 
-        plane = new Plane(high, width, color);
-        plane.rotar(-Math.PI/2, [0,0,1]);
+        plane = new Plane(width, high, color, material);
+        plane.rotar(-Math.PI/2, [0,1,0]);
+        plane.rotar(-Math.PI/2, [1,0,0]);
         plane.trasladar([0,length/2,0])
         this.addChild(plane);
     }

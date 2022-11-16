@@ -2,6 +2,7 @@ import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from "../constants/colors.js";
 import {app} from "../main.js";
+import {Material} from "../materials/Material.js";
 
 class CastleTowerMainBody extends RevolutionCurve {
 
@@ -19,6 +20,7 @@ class CastleTowerMainBody extends RevolutionCurve {
         super(path);
 
         this.color = colors.khaki;
+        this.material = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 7., 14.);
     }
 
 }

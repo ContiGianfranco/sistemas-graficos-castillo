@@ -1,6 +1,7 @@
 import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from "../constants/colors.js";
+import {Material} from "../materials/Material.js";
 
 class CastleTowerRoof extends RevolutionCurve {
 
@@ -15,6 +16,7 @@ class CastleTowerRoof extends RevolutionCurve {
         super(path);
 
         this.color = colors.brightBlue;
+        this.material = new Material("../../assets/textures/factory_wall_1k.blend/textures/factory_wall_diff_1k.jpg", 7., 7.);
     }
 
 }
