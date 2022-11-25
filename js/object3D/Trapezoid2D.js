@@ -16,7 +16,8 @@ class Trapezoid2D extends Object3D {
 
     constructor(baseLength, topLength, high, color) {
         let pos = [];
-        let normal=[];
+        let normal = [];
+        let uv = [];
 
         let rows = 20;
         let cols = 20;
@@ -37,6 +38,9 @@ class Trapezoid2D extends Object3D {
                 normal.push(n[0]);
                 normal.push(n[1]);
                 normal.push(n[2]);
+
+                uv.push(u);
+                uv.push(v);
             }
         }
 
@@ -52,6 +56,10 @@ class Trapezoid2D extends Object3D {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
         trianglesNormalBuffer.itemSize = 3;
         trianglesNormalBuffer.numItems = normal.length / 3;
+
+        let trianglesUvBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 
         let index=[];
 
@@ -74,7 +82,7 @@ class Trapezoid2D extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer);
         this.color = color;
     }
 

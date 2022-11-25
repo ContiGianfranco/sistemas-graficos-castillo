@@ -1,18 +1,43 @@
 import {Object3D} from "../object3D/Object3D.js";
 import {gl} from "../main.js";
 
+function distance(a, b){
+    return Math.sqrt(Math.pow(a.x-b.x,2)+Math.pow(a.y-b.y,2)+Math.pow(a.z-b.z,2));
+}
+
+function getPercent(positions) {
+    let result = [];
+    let length = 0;
+
+    result.push(0);
+
+    for (let i=1;i<positions.length;i++){
+        length += distance(positions[i], positions[i-1]);
+        result.push(length);
+    }
+
+    for (let i=0;i<result.length;i++){
+        result[i] = result[i]/length;
+    }
+
+    return result;
+}
+
 class SweptSurface extends Object3D {
 
     constructor(shape, path) {
         let pos = [];
         let normal=[];
+        let uv = [];
 
         let pathPositions = path.getPathPosition();
         let pathNormals = path.getPathNormals();
         let pathTangents = path.getPathTangents();
+        let pathPercent = getPercent(pathPositions);
 
         let shapePositions = shape.getPathPosition();
         let shapeNormals = shape.getPathNormals();
+        let shapePercent = getPercent(shapePositions);
 
         let rows = shapePositions.length;
         let cols = pathPositions.length;
@@ -62,6 +87,9 @@ class SweptSurface extends Object3D {
                 normal.push(shapeNormal[0]);
                 normal.push(shapeNormal[1]);
                 normal.push(shapeNormal[2]);
+
+                uv.push(pathPercent[j]);
+                uv.push(shapePercent[i]);
             }
         }
 
@@ -77,6 +105,10 @@ class SweptSurface extends Object3D {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
         trianglesNormalBuffer.itemSize = 3;
         trianglesNormalBuffer.numItems = normal.length / 3;
+
+        let trianglesUvBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 
         let index=[];
 
@@ -99,7 +131,7 @@ class SweptSurface extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, trianglesUvBuffer);
     }
 
 }
