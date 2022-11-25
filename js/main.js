@@ -1,6 +1,8 @@
 import {Scene} from "./object3D/Scene.js";
 import {Camara} from "./camara/Camara.js";
 
+import vertexShaderSource from '../shaders/vertexShaders.glsl';
+
 let mat4=glMatrix.mat4;
 
 let gl = null,
@@ -83,11 +85,10 @@ function reloadScene(){
 
 function initShaders(){
     //get shader source
-    let fs_source = document.getElementById('shader-fs').innerHTML,
-        vs_source = document.getElementById('shader-vs').innerHTML;
+    let fs_source = document.getElementById('shader-fs').innerHTML;
 
     //compile shaders
-    vertexShader = makeShader(vs_source, gl.VERTEX_SHADER);
+    vertexShader = makeShader(vertexShaderSource, gl.VERTEX_SHADER);
     fragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER);
 
     //create program
