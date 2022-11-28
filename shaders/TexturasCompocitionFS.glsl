@@ -5,6 +5,9 @@ uniform sampler2D uSampler0;
 uniform sampler2D uSampler1;
 uniform sampler2D uSampler2;
 
+uniform float uScale;
+uniform float vScale;
+
 // Perlin Noise
 vec3 mod289(vec3 x)
 {
@@ -102,7 +105,7 @@ float cnoise(vec3 P)
 
 void main(void) {
 
-    float scale1 = 1.6;
+    float scale1 = 2.;
     float low = -0.2;
     float high = 0.7;
 
@@ -112,25 +115,29 @@ void main(void) {
 
     // sampleo el pasto a diferentes escalas
 
-    vec3 pasto1=texture2D(uSampler2,vUv*4.0*scale1).xyz;
-    vec3 pasto2=texture2D(uSampler2,vUv*3.77*scale1).xyz;
-    vec3 pasto3=texture2D(uSampler2,vUv*2.11*scale1).xyz;
+    vec2 sclaedUv;
+    sclaedUv.x = vUv.x * uScale;
+    sclaedUv.y = vUv.y * vScale;
+
+    vec3 pasto1=texture2D(uSampler2,sclaedUv*4.0*scale1).xyz;
+    vec3 pasto2=texture2D(uSampler2,sclaedUv*3.77*scale1).xyz;
+    vec3 pasto3=texture2D(uSampler2,sclaedUv*2.11*scale1).xyz;
 
     // sampleo la tierra a diferentes escalas
 
-    vec3 tierra1=texture2D(uSampler0,vUv*4.0*scale1).xyz;
-    vec3 tierra2=texture2D(uSampler0,vUv*2.77*scale1).xyz;
+    vec3 tierra1=texture2D(uSampler0,sclaedUv*4.0*scale1).xyz;
+    vec3 tierra2=texture2D(uSampler0,sclaedUv*2.77*scale1).xyz;
 
     // sampleo la roca
-    vec3 roca=texture2D(uSampler1,vUv*2.77*scale1).xyz;
+    vec3 roca=texture2D(uSampler1,sclaedUv*2.77*scale1).xyz;
 
     // combino los 3 sampleos del pasto con la funcion de mezcla
     vec3 color1=mix(mix(pasto1,pasto2,0.5),pasto3,0.3);
 
     // genero una mascara 1 a partir de ruido perlin
-    float noise1=cnoise(vUv.xyx*8.23*scale1+23.11);
-    float noise2=cnoise(vUv.xyx*11.77*scale1+9.45);
-    float noise3=cnoise(vUv.xyx*14.8*scale1+21.2);
+    float noise1=cnoise(sclaedUv.xyx*8.23*scale1+23.11);
+    float noise2=cnoise(sclaedUv.xyx*11.77*scale1+9.45);
+    float noise3=cnoise(sclaedUv.xyx*14.8*scale1+21.2);
 
     float mask1=mix(mix(noise1,noise2,0.5),noise3,0.3);
     mask1=smoothstep(-0.1,0.2,mask1);
@@ -139,9 +146,9 @@ void main(void) {
     vec3 color2=mix(mix(tierra1,tierra2,0.5),roca,mask1);
 
     // genero la mascara 2 a partir del ruido perlin
-    float noise4=cnoise(vUv.xyx*8.23*scale1);
-    float noise5=cnoise(vUv.xyx*11.77*scale1);
-    float noise6=cnoise(vUv.xyx*14.8*scale1);
+    float noise4=cnoise(sclaedUv.xyx*8.23*scale1);
+    float noise5=cnoise(sclaedUv.xyx*11.77*scale1);
+    float noise6=cnoise(sclaedUv.xyx*14.8*scale1);
 
     float mask2=mix(mix(noise4,noise5,0.5),noise6,0.3);
     mask2=smoothstep(low,high,mask2);

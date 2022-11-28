@@ -96,6 +96,7 @@ async function initShaders() {
 
     let textureFragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER)
     let vertexShader = await compileShader('../shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
+    let multiTextureFragmentShader = await  compileShader('../shaders/TexturasCompocitionFS.glsl', gl.FRAGMENT_SHADER)
 
     window.glTextureProgram = gl.createProgram();
 
@@ -106,6 +107,19 @@ async function initShaders() {
     if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
         alert("Unable to initialize the textures shader program.");
     }
+
+    window.glMultiTextureProgram = gl.createProgram();
+
+    gl.attachShader(glMultiTextureProgram, vertexShader);
+    gl.attachShader(glMultiTextureProgram, multiTextureFragmentShader);
+    gl.linkProgram(glMultiTextureProgram);
+
+    if (!gl.getProgramParameter(glMultiTextureProgram, gl.LINK_STATUS)) {
+        alert("Unable to initialize the textures shader program.");
+    }
+    glMultiTextureProgram.samplerUniform0 = gl.getUniformLocation(glMultiTextureProgram, "uSampler0");
+    glMultiTextureProgram.samplerUniform1 = gl.getUniformLocation(glMultiTextureProgram, "uSampler1");
+    glMultiTextureProgram.samplerUniform2 = gl.getUniformLocation(glMultiTextureProgram, "uSampler2");
 }
 
 function makeShader(src, type){

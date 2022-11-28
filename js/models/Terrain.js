@@ -2,7 +2,7 @@ import {Path} from "../curvas/Path.js";
 import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from '../constants/colors.js';
 import {Plane} from "../object3D/Plane.js";
-import {Material} from "../materials/Material.js";
+import {BlendTextureMaterial} from "../materials/BlendTextureMaterial.js";
 
 class Terrain extends RevolutionCurve {
 
@@ -15,7 +15,13 @@ class Terrain extends RevolutionCurve {
         ];
         let path = new Path(controlPoints, 0.1);
 
-        let material = new Material("../../assets/textures/Grass01_MR_1K/Grass01_1K_BaseColor.png", 60., 20.);
+        let paths = [
+            "../../assets/textures/terrain/tierra.jpg",
+            "../../assets/textures/terrain/roca.jpg",
+            "../../assets/textures/terrain/pasto.jpg"
+        ]
+
+        let material = new BlendTextureMaterial(paths, 3., 1.);
 
         super(path, material);
         this.color = colors.grassGreen;
