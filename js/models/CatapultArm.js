@@ -3,23 +3,26 @@ import {Cube} from "../object3D/Cube.js";
 import {CatapultConterbalance} from "./CatapultConterbalance.js";
 import {Object3D} from "../object3D/Object3D.js";
 import {Sphere} from "../object3D/Sphere.js";
+import {Material} from "../materials/Material.js";
 
 class CatapultArm extends Object3D {
 
     constructor(alfa) {
         super(null,null,null);
 
+        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+
         if (alfa < Math.PI/4){
-            let sphere = new Sphere(0.05, colors.stoneGrey);
+            let sphere = new Sphere(0.05, colors.stoneGrey, material);
             sphere.trasladar([0,0.07,-0.6])
             this.addChild(sphere);
         }
 
-        let cube = new Cube(0.05, 0.04, 0.8, colors.wood);
+        let cube = new Cube(0.05, 0.04, 0.8, colors.wood, material);
         cube.trasladar([0,0,-0.25])
         this.addChild(cube);
 
-        cube = new Cube(0.15, 0.04, 0.17, colors.wood);
+        cube = new Cube(0.15, 0.04, 0.17, colors.wood, material);
         cube.trasladar([0,0,-0.6]);
         this.addChild(cube);
 

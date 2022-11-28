@@ -3,7 +3,7 @@ import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 
 class Cylinder extends RevolutionCurve {
 
-    constructor(higth, rad, color) {
+    constructor(higth, rad, color, material) {
 
         let controlPoints = [
             [[0,higth/2,0],[rad*0.25,higth/2,0],[rad*0.5,higth/2,0],[rad,higth/2,0]],
@@ -12,7 +12,7 @@ class Cylinder extends RevolutionCurve {
         ];
         let path = new Path(controlPoints, 0.1);
 
-        super(path);
+        super(path, material);
 
         this.color = color;
     }

@@ -1,19 +1,13 @@
 import {Scene} from "./object3D/Scene.js";
 import {Camara} from "./camara/Camara.js";
 
-import vertexShaderSource from '../shaders/vertexShaders.glsl';
-
 let mat4=glMatrix.mat4;
 
 let gl = null,
-    canvas = null,
+    canvas = null;
 
-    glProgram = null,
-    fragmentShader = null,
-    vertexShader = null;
-
-let viewMatrix = mat4.create();
-let projMatrix = mat4.create();
+export let viewMatrix = mat4.create();
+export let projMatrix = mat4.create();
 
 let escena = null;
 
@@ -23,7 +17,6 @@ let isAnimated = false;
 let app = {
     'castleSides': 5,
     'doorAngle': Math.PI/3,
-    'shaderMode': 'Texturas',
     'wallHigth': 0.4,
     'width': 0.7,
     'length': 0.7,
@@ -34,29 +27,28 @@ let app = {
     }
 }
 
-function initWebGL(){
+async function initWebGL() {
 
     canvas = document.getElementById("my-canvas");
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    try{
+    try {
         gl = canvas.getContext("webgl");
-    }catch(e){
-        alert(  "Error: Your browser does not appear to support WebGL.");
+    } catch (e) {
+        alert("Error: Your browser does not appear to support WebGL.");
     }
 
-    if(gl) {
+    if (gl) {
 
         setupWebGL();
         GUI();
-        initShaders();
-        setupVertexShaderMatrix();
+        await initShaders();
         tick();
 
-    }else{
-        alert(  "Error: Your browser does not appear to support WebGL.");
+    } else {
+        alert("Error: Your browser does not appear to support WebGL.");
     }
 
 }
@@ -83,32 +75,37 @@ function reloadScene(){
     escena.rotar(-Math.PI/2,[0,1,0])
 }
 
-function initShaders(){
-    //get shader source
-    let fs_source = document.getElementById('shader-fs').innerHTML;
+const compileShader = async (
+    src, type
+) => {
+    const shaderSrc = await Promise.all([
+        fetch(src)
+            .then((value)=> {
+                return value.text()
+            })
+    ]);
+
+
 
     //compile shaders
-    vertexShader = makeShader(vertexShaderSource, gl.VERTEX_SHADER);
-    fragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER);
+    return makeShader(shaderSrc, type);
+}
 
-    //create program
-    glProgram = gl.createProgram();
+async function initShaders() {
+    let fs_source = document.getElementById('shader-fs').innerHTML;
 
-    glProgram.samplerUniform = gl.getUniformLocation(glProgram, "uSampler");
+    let textureFragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER)
+    let vertexShader = await compileShader('../shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
 
-    //attach and link shaders to the program
-    gl.attachShader(glProgram, vertexShader);
-    gl.attachShader(glProgram, fragmentShader);
-    gl.linkProgram(glProgram);
+    window.glTextureProgram = gl.createProgram();
 
-    if (!gl.getProgramParameter(glProgram, gl.LINK_STATUS)) {
-        alert("Unable to initialize the shader program.");
+    gl.attachShader(glTextureProgram, vertexShader);
+    gl.attachShader(glTextureProgram, textureFragmentShader);
+    gl.linkProgram(glTextureProgram);
+
+    if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
+        alert("Unable to initialize the textures shader program.");
     }
-
-    //use program
-    gl.useProgram(glProgram);
-
-    setUpShaderMode();
 }
 
 function makeShader(src, type){
@@ -123,9 +120,9 @@ function makeShader(src, type){
     return shader;
 }
 
-function setupVertexShaderMatrix(){
-    let viewMatrixUniform  = gl.getUniformLocation(glProgram, "viewMatrix");
-    let projMatrixUniform  = gl.getUniformLocation(glProgram, "projMatrix");
+export function setupVertexShaderMatrix(program){
+    let viewMatrixUniform  = gl.getUniformLocation(program, "viewMatrix");
+    let projMatrixUniform  = gl.getUniformLocation(program, "projMatrix");
 
     gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
     gl.uniformMatrix4fv(projMatrixUniform, false, projMatrix);
@@ -139,26 +136,8 @@ function drawScene(){
     escena.draw(m1, m2);
 }
 
-function setUpShaderMode() {
-    if (app.shaderMode === 'Default') {
-        setUniformUnsignedInteger("shaderMode", 1)
-    } else if (app.shaderMode === 'Normales') {
-        setUniformUnsignedInteger("shaderMode", 0)
-    } else if (app.shaderMode === 'Texturas'){
-        setUniformUnsignedInteger("shaderMode", 2)
-    }
-
-}
-
-function setUniformUnsignedInteger(key, value) {
-    let tmp  = gl.getUniformLocation(glProgram, key);
-    gl.uniform1i(tmp, value);
-}
-
 function updateCamara(){
     window.camara.setViewMatrix(viewMatrix);
-    let viewMatrixUniform  = gl.getUniformLocation(glProgram, "viewMatrix");
-    gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
 }
 
 function animate(){
@@ -201,12 +180,8 @@ function GUI (){
     f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(reloadScene)
     f2.add(app, 'animate').name("Disparar");
 
-    let f3 = gui.addFolder('Rendering');
-
-    f3.add(app, 'shaderMode', ['Default', 'Normales', 'Texturas']).name("Render mode").onChange(setUpShaderMode)
-
 }
 
-window.onload=initWebGL;
+window.onload= await initWebGL;
 
-export {gl, glProgram, app}
+export {gl, app}

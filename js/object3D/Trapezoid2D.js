@@ -14,7 +14,7 @@ function getPos(u,v,base, top, high){
 
 class Trapezoid2D extends Object3D {
 
-    constructor(baseLength, topLength, high, color) {
+    constructor(baseLength, topLength, high, color, material) {
         let pos = [];
         let normal = [];
         let uv = [];
@@ -82,7 +82,7 @@ class Trapezoid2D extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer,material);
         this.color = color;
     }
 

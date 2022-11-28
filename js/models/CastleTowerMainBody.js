@@ -17,10 +17,11 @@ class CastleTowerMainBody extends RevolutionCurve {
         ];
         let path = new Path(controlPoints, 0.1);
 
-        super(path);
+        let material = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 7., 14.);
+
+        super(path, material);
 
         this.color = colors.khaki;
-        this.material = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 7., 14.);
     }
 
 }

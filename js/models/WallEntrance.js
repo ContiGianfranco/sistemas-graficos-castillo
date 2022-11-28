@@ -4,23 +4,26 @@ import {Wall} from "./Wall.js";
 import {Door} from "./WallDoor.js";
 import {app} from "../main.js";
 import colors from "../constants/colors.js";
+import {Material} from "../materials/Material.js";
 
 class WallEntrance extends Object3D {
 
     constructor() {
-        super(null,null,null);
+        super(null,null,null,null,null);
 
         let h = app.wallHigth*0.7;
 
-        let side = new Cube(1/15,h,0.11, colors.stoneGrey);
+        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+
+        let side = new Cube(1/15,h,0.11, colors.stoneGrey, material);
         side.trasladar([-2/15,h/2,0])
         this.addChild(side)
 
-        side = new Cube(1/15,h,0.11, colors.stoneGrey);
+        side = new Cube(1/15,h,0.11, colors.stoneGrey, material);
         side.trasladar([2/15,h/2,0])
         this.addChild(side)
 
-        let top = new Cube(1/3,1/15,0.11, colors.stoneGrey);
+        let top = new Cube(1/3,1/15,0.11, colors.stoneGrey, material);
         top.trasladar([0,h+0.025,0])
         this.addChild(top)
 

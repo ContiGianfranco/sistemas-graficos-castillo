@@ -6,7 +6,7 @@ import {Wall} from "./Wall.js";
 class WallSection extends Object3D {
 
     constructor(scale) {
-        super(null,null,null);
+        super(null,null,null,null, null);
 
         let muralla = new Wall();
         muralla.rotar(Math.PI/2, [0,1,0]);

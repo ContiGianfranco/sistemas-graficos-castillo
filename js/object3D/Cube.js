@@ -6,7 +6,7 @@ class Cube extends Object3D {
     constructor(length, high, width, color, material) {
 
 
-        super(null,null,null);
+        super(null,null,null, null, null);
         let plane = new Plane(length, width, color, material);
         plane.trasladar([0,high/2,0])
 

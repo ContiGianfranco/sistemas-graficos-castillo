@@ -1,8 +1,8 @@
-import {gl, glProgram} from "../main.js";
+import {gl, setupVertexShaderMatrix} from "../main.js";
 
 
 class Object3D {
-    constructor(vertexBuffer,indexBuffer,normalBuffer, uvBuffer) {
+    constructor(vertexBuffer,indexBuffer,normalBuffer, uvBuffer, material) {
         this.vertexBuffer=vertexBuffer;
         this.indexBuffer=indexBuffer;
         this.normalBuffer=normalBuffer;
@@ -10,6 +10,8 @@ class Object3D {
 
         this.modelMatrix=glMatrix.mat4.create();
         this.normalMatrix=glMatrix.mat4.create();
+
+        this.material = material;
 
         this.childes=[];
     }
@@ -21,33 +23,39 @@ class Object3D {
         glMatrix.mat4.multiply(modelMatrix,matrix,this.modelMatrix);
         glMatrix.mat4.multiply(normalMatrix,normal,this.normalMatrix);
 
-        // setupVertexShaderMatrix
-        let modelMatrixUniform = gl.getUniformLocation(glProgram, "modelMatrix");
-        let normalMatrixUniform = gl.getUniformLocation(glProgram, "normalMatrix");
-
-        gl.uniformMatrix4fv(modelMatrixUniform, false, modelMatrix);
-        gl.uniformMatrix4fv(normalMatrixUniform, false, normalMatrix);
-
         if (this.vertexBuffer && this.indexBuffer && this.normalBuffer){
+            let program = this.material.program();
+
+            gl.useProgram(program);
+
+            setupVertexShaderMatrix(program);
+
+            // setupVertexShaderMatrix
+            let modelMatrixUniform = gl.getUniformLocation(program, "modelMatrix");
+            let normalMatrixUniform = gl.getUniformLocation(program, "normalMatrix");
+
+            gl.uniformMatrix4fv(modelMatrixUniform, false, modelMatrix);
+            gl.uniformMatrix4fv(normalMatrixUniform, false, normalMatrix);
+
             if (this.color){
-                gl.uniform3f(gl.getUniformLocation(glProgram, "uColor"), this.color[0], this.color[1], this.color[2]);
+                gl.uniform3f(gl.getUniformLocation(program, "uColor"), this.color[0], this.color[1], this.color[2]);
             }
 
             if (this.material){
                 this.material.apply();
             }
 
-            let vertexPositionAttribute = gl.getAttribLocation(glProgram, "aVertexPosition");
+            let vertexPositionAttribute = gl.getAttribLocation(program, "aVertexPosition");
             gl.enableVertexAttribArray(vertexPositionAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.vertexBuffer);
             gl.vertexAttribPointer(vertexPositionAttribute, this.vertexBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
-            let vertexNormalAttribute = gl.getAttribLocation(glProgram, "aVertexNormal");
+            let vertexNormalAttribute = gl.getAttribLocation(program, "aVertexNormal");
             gl.enableVertexAttribArray(vertexNormalAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.normalBuffer);
             gl.vertexAttribPointer(vertexNormalAttribute, this.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
-            let vertexUvAttribute = gl.getAttribLocation(glProgram, "aVertexUv");
+            let vertexUvAttribute = gl.getAttribLocation(program, "aVertexUv");
             gl.enableVertexAttribArray(vertexUvAttribute);
             gl.bindBuffer(gl.ARRAY_BUFFER, this.trianglesUvBuffer);
             gl.vertexAttribPointer(vertexUvAttribute, 2, gl.FLOAT, false, 0, 0);

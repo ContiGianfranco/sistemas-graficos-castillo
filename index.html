@@ -20,7 +20,6 @@
 
             precision highp float;
 
-            uniform int shaderMode;
             uniform vec3 uColor;
 
             varying vec3 vNormal;
@@ -45,19 +44,11 @@
 	            color=dot(lightVec,vNormal)*diffColor+vec3(0.2,0.2,0.2);
 	            color= mix(uColor, color, 0.3);
 
-                if (shaderMode == 0) {
-                    diffColor=mix(vec3(0.7,0.7,0.7),vNormal,0.5);
-                    color=dot(lightVec,vNormal)*diffColor+vec3(0.2,0.2,0.2);
-                    gl_FragColor = vec4(color,1.0);
-                } else if (shaderMode == 2) {
-                    uvScaled.x = vUv.x * uScale;
-                    uvScaled.y = vUv.y * vScale;
+                uvScaled.x = vUv.x * uScale;
+                uvScaled.y = vUv.y * vScale;
 
-                    vec4 textureColor = texture2D(uSampler,uvScaled);
-                    gl_FragColor = vec4(textureColor.xyz,1.0);
-                } else {
-                    gl_FragColor = vec4(color,1.0);
-                }
+                vec4 textureColor = texture2D(uSampler,uvScaled);
+                gl_FragColor = vec4(textureColor.xyz,1.0);
             }
         </script>
         

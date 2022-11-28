@@ -110,9 +110,6 @@ void main(void) {
     // uSampler1: roca
     // uSampler2: pasto
 
-    //vec4 textureColor = texture2D(uSampler2,vUv*3.0);
-    //vec4 textureColor = texture2D(uSampler2,vUv*3.0);
-
     // sampleo el pasto a diferentes escalas
 
     vec3 pasto1=texture2D(uSampler2,vUv*4.0*scale1).xyz;

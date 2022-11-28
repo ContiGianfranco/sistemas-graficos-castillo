@@ -6,7 +6,7 @@ import {app} from "../main.js";
 class CastleTower extends Object3D {
 
     constructor() {
-        super(null, null, null);
+        super(null, null, null, null, null);
 
         let h = 0.2*app.floors+0.1;
 

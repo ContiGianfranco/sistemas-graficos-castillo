@@ -25,7 +25,7 @@ function getPercent(positions) {
 
 class SweptSurface extends Object3D {
 
-    constructor(shape, path) {
+    constructor(shape, path, material) {
         let pos = [];
         let normal=[];
         let uv = [];
@@ -131,7 +131,7 @@ class SweptSurface extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, trianglesUvBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, trianglesUvBuffer, material);
     }
 
 }

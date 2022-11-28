@@ -1,7 +1,7 @@
-import {gl, glProgram} from "../main.js";
+import {gl} from "../main.js";
 
-function setUniformFloat(key, value) {
-    let tmp  = gl.getUniformLocation(glProgram, key);
+function setUniformFloat(key, value, program) {
+    let tmp  = gl.getUniformLocation(program, key);
     gl.uniform1f(tmp, value);
 }
 
@@ -36,12 +36,18 @@ class Material {
     }
 
     apply(){
-        setUniformFloat("uScale", this.scale.u);
-        setUniformFloat("vScale", this.scale.v);
+        let program = this.program();
+
+        setUniformFloat("uScale", this.scale.u, program);
+        setUniformFloat("vScale", this.scale.v, program);
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
-        gl.uniform1i(glProgram.samplerUniform, 0);
+        gl.uniform1i(program.samplerUniform, 0);
+    }
+
+    program(){
+        return glTextureProgram;
     }
 }
 

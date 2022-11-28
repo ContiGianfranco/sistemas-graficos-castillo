@@ -15,12 +15,12 @@ class Terrain extends RevolutionCurve {
         ];
         let path = new Path(controlPoints, 0.1);
 
-        super(path);
+        let material = new Material("../../assets/textures/Grass01_MR_1K/Grass01_1K_BaseColor.png", 60., 20.);
 
+        super(path, material);
         this.color = colors.grassGreen;
-        this.material = new Material("../../assets/textures/Grass01_MR_1K/Grass01_1K_BaseColor.png", 60., 20.);
 
-        let water = new Plane(3,3, colors.brightBlue);
+        let water = new Plane(3,3, colors.brightBlue, material);
         water.trasladar([0,-0.05,0])
         this.addChild(water)
     }

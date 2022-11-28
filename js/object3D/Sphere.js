@@ -14,7 +14,7 @@ function getPos(u,v,radio){
 
 class Sphere extends Object3D {
 
-    constructor(rad, color) {
+    constructor(rad, color, material) {
         let pos = [];
         let normal=[];
 
@@ -74,7 +74,7 @@ class Sphere extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, null,material);
         this.color = color;
     }
 

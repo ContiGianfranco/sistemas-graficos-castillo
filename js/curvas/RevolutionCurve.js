@@ -25,7 +25,7 @@ function getPercent(positions) {
 
 class RevolutionCurve extends Object3D {
 
-    constructor(path) {
+    constructor(path, material) {
         let pos = [];
         let normal=[];
         let uv = [];
@@ -111,7 +111,7 @@ class RevolutionCurve extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer, material);
     }
 
 }

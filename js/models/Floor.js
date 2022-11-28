@@ -10,7 +10,7 @@ const windowSpacing = 0.15;
 class Floor extends Object3D {
 
     constructor() {
-        super(null,null,null);
+        super(null,null,null,null,null);
 
         let w = app.width;
         let l = app.length;
@@ -21,7 +21,7 @@ class Floor extends Object3D {
         floor.trasladar([0,0.19/2,0])
         this.addChild(floor)
 
-        let detail = new Cube(l+0.01,0.01,w+0.01, colors.greenCopperOxide);
+        let detail = new Cube(l+0.01,0.01,w+0.01, colors.greenCopperOxide, texture);
         detail.trasladar([0,0.19+0.01/2,0]);
         this.addChild(detail)
 

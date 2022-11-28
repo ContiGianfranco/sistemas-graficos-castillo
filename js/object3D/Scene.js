@@ -7,7 +7,7 @@ import {CatapultSystem} from "../models/CatapultSystem.js";
 class Scene extends Object3D {
 
     constructor() {
-        super(null,null,null);
+        super(null,null,null,null, null);
     }
 
     init(){
