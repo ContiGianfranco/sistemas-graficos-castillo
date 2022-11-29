@@ -35,7 +35,7 @@ class Terrain extends RevolutionCurveAlternativeUVs {
         material = new BlendTextureMaterial(paths, 0.2, 0.2, 300);
 
         let water = new Plane(3,3, colors.brightBlue, material);
-        water.trasladar([0,-0.05,0])
+        water.trasladar([0,-0.02,0])
         this.addChild(water)
     }
 }

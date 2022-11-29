@@ -7,7 +7,7 @@ import {Material} from "../materials/Material.js";
 class CatapultConterbalance extends Cylinder {
 
     constructor() {
-        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+        let material = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 2.);
 
         super(0.12, 0.012, colors.black, material);
 
@@ -23,7 +23,18 @@ class CatapultConterbalance extends Cylinder {
         suport.trasladar([0,-0.02,-0.05])
         this.addChild(suport)
 
-        let weight = new Cube(0.15,0.15,0.15, colors.stoneGrey, material);
+        material = new Material("../../assets/textures/ConcreteWall01_MR_1K/ConcreteWall01_1K_BaseColor.png", 1., 1.);
+
+        let materials = {
+            'topT': material,
+            'bottomT': material,
+            'frontT': material,
+            'backT': material,
+            'leftT': material,
+            'rightT': material
+        }
+
+        let weight = new Cube(0.15,0.15,0.15, colors.stoneGrey, materials);
         weight.trasladar([-0.14,0,0])
         this.addChild(weight)
 

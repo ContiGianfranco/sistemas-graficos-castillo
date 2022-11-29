@@ -11,9 +11,22 @@ class Door extends Object3D {
 
         let h = app.wallHigth*0.7;
 
-        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+        let scale = 5;
 
-        let door = new Cube(1/5,h,0.025, colors.wood, material);
+        let materialT = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1/5 * scale, 0.025 * scale);
+        let materialS = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.025 * scale, 1/5 * scale);
+        let materialF = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1/5 * scale, h * scale);
+
+        let materials = {
+            'topT': materialT,
+            'bottomT': materialT,
+            'frontT': materialF,
+            'backT': materialF,
+            'leftT': materialS,
+            'rightT': materialS
+        }
+
+        let door = new Cube(1/5,h,0.025, colors.wood, materials);
         door.trasladar([0,h/2,0]);
         this.addChild(door)
     }

@@ -5,9 +5,21 @@ import {Material} from "../materials/Material.js";
 class Window extends Cube {
 
     constructor() {
-        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
 
-        super(0.05, 0.1, 0.025, colors.black, material);
+        let materialGlass = new Material("../../assets/textures/glass/TexturesCom_HighRiseGlass0069_1_seamless_S.jpg", 0.25, 1., 400, 1);
+
+        let material = new Material("../../assets/textures/Bronze01_MR_1K/Bronze01_1K_BaseColor.png", 0.5, 1., 1000, 0.2);
+
+        let materials = {
+            'topT': material,
+            'bottomT': material,
+            'frontT': materialGlass,
+            'backT': materialGlass,
+            'leftT': material,
+            'rightT': material
+        }
+
+        super(0.05, 0.1, 0.025, colors.black, materials);
     }
 
 }

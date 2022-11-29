@@ -13,11 +13,13 @@ class CatapultFrame extends Object3D {
         let arm = new CatapultArm(0);
         this.addChild(arm)
 
-        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+        let material = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 3., 3.);
 
         let suport = new Cylinder(0.25,0.019,colors.black, material);
         suport.rotar(Math.PI/2,[0,0,1])
         this.addChild(suport)
+
+        material = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.5, 1.5);
 
         suport = new Trapezoid(0.2, 0.05,0.4,0.025,colors.wood, material);
         suport.rotar(Math.PI/2,[0,1,0])

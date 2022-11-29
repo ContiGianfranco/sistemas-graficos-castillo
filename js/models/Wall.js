@@ -6,7 +6,7 @@ import {Material} from "../materials/Material.js";
 
 class Wall extends SweptSurface {
 
-    constructor() {
+    constructor(material) {
 
         let h = app.wallHigth*0.7;
 
@@ -28,9 +28,12 @@ class Wall extends SweptSurface {
         ];
         let path = new Path(controlPoints2, 0.1);
 
-        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
-
-        super(shape, path, material);
+        if (material){
+            super(shape, path, material);
+        } else {
+            let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 8., 8.);
+            super(shape, path, material);
+        }
 
         this.color = colors.stoneGrey;
     }

@@ -16,12 +16,37 @@ class Floor extends Object3D {
         let l = app.length;
 
 
-        let texture = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 11.0, 5.);
-        let floor = new Cube(l,0.19,w, colors.khaki, texture);
+        let material = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 11.0, 5.);
+
+        let materials = {
+            'topT': material,
+            'bottomT': material,
+            'frontT': material,
+            'backT': material,
+            'leftT': material,
+            'rightT': material
+        }
+
+        let floor = new Cube(l,0.19,w, colors.khaki, materials);
         floor.trasladar([0,0.19/2,0])
         this.addChild(floor)
 
-        let detail = new Cube(l+0.01,0.01,w+0.01, colors.greenCopperOxide, texture);
+        let detailMaterialT = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, w, 50, 0.30);
+
+        let detailMaterialS = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", w, 0.01, 50, 0.30);
+
+        let detailMaterialF = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, 0.01, 50, 0.30);
+
+        materials = {
+            'topT': detailMaterialT,
+            'bottomT': detailMaterialT,
+            'frontT': detailMaterialF,
+            'backT': detailMaterialF,
+            'leftT': detailMaterialS,
+            'rightT': detailMaterialS
+        }
+
+        let detail = new Cube(l+0.01,0.01,w+0.01, colors.greenCopperOxide, materials);
         detail.trasladar([0,0.19+0.01/2,0]);
         this.addChild(detail)
 
