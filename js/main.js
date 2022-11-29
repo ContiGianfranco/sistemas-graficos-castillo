@@ -137,9 +137,13 @@ function makeShader(src, type){
 export function setupVertexShaderMatrix(program){
     let viewMatrixUniform  = gl.getUniformLocation(program, "viewMatrix");
     let projMatrixUniform  = gl.getUniformLocation(program, "projMatrix");
+    let ViewerPositionUniform  = gl.getUniformLocation(program, "uViewerPosition");
+
+    let viewerPosition = viewMatrix.slice(12, 15);
 
     gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
     gl.uniformMatrix4fv(projMatrixUniform, false, projMatrix);
+    gl.uniform3f(ViewerPositionUniform, viewerPosition[0], viewerPosition[1], viewerPosition[2]);
 }
 
 function drawScene(){

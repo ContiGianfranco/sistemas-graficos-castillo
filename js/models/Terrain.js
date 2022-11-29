@@ -1,10 +1,10 @@
 import {Path} from "../curvas/Path.js";
-import {RevolutionCurve} from "../curvas/RevolutionCurve.js";
 import colors from '../constants/colors.js';
 import {Plane} from "../object3D/Plane.js";
 import {BlendTextureMaterial} from "../materials/BlendTextureMaterial.js";
+import {RevolutionCurveAlternativeUVs} from "../curvas/RevolutionCurveAlternativeUVs.js";
 
-class Terrain extends RevolutionCurve {
+class Terrain extends RevolutionCurveAlternativeUVs {
 
     constructor() {
 
@@ -21,10 +21,18 @@ class Terrain extends RevolutionCurve {
             "../../assets/textures/terrain/pasto.jpg"
         ]
 
-        let material = new BlendTextureMaterial(paths, 3., 1.);
+        let material = new BlendTextureMaterial(paths, 0.1, 0.1);
 
         super(path, material);
         this.color = colors.grassGreen;
+
+        paths = [
+            "../../assets/textures/water/TexturesCom_WaterPlain0012_1_seamless_S.jpg",
+            "../../assets/textures/water/TexturesCom_WaterPlain0015_1_seamless_S.jpg",
+            "../../assets/textures/water/TexturesCom_WaterPlain0017_1_seamless_S.jpg"
+        ]
+
+        material = new BlendTextureMaterial(paths, 0.2, 0.2, 300);
 
         let water = new Plane(3,3, colors.brightBlue, material);
         water.trasladar([0,-0.05,0])

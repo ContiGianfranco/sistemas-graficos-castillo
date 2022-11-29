@@ -30,12 +30,14 @@ function initTexture(file){
 }
 
 class BlendTextureMaterial {
-    constructor(paths, uScale, vScale) {
+    constructor(paths, uScale, vScale, glossiness = 1) {
         this.textures = []
         for (let i=0; i < paths.length; i++) {
             this.textures.push(initTexture(paths[i]))
         }
         this.scale = {u: uScale, v: vScale}
+
+        this.glossiness = glossiness;
     }
 
     apply(){
@@ -43,6 +45,8 @@ class BlendTextureMaterial {
 
         setUniformFloat("uScale", this.scale.u, program);
         setUniformFloat("vScale", this.scale.v, program);
+
+        gl.uniform1f(gl.getUniformLocation(program, 'uGlossiness'), this.glossiness);
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.textures[0]);

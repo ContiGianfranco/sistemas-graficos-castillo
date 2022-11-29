@@ -8,6 +8,12 @@ uniform sampler2D uSampler2;
 uniform float uScale;
 uniform float vScale;
 
+varying vec3 vPosWorld;
+varying vec3 vNormal;
+uniform vec3 uViewerPosition;
+uniform float uGlossiness;
+uniform float uKsFactor;
+
 // Perlin Noise
 vec3 mod289(vec3 x)
 {
@@ -103,9 +109,33 @@ float cnoise(vec3 P)
     return 2.2 * n_xyz;
 }
 
+vec3 directPhong(vec3 lightVec, vec3 textureColor) {
+
+    // Iluminacion ambiental de Phong
+    vec3 ka = textureColor.xyz;
+    vec3 ia = vec3(1.0,0.71,0.0);
+    vec3 ambientIllumination = ka * ia * 0.1;
+
+    // Iluminacion difusa de Phong
+    vec3 kd = ka;
+    vec3 id = vec3(1.0,1.0,1.0);
+    vec3 diffuseIllumination = clamp(dot(lightVec, vNormal), 0.0, 1.0)*kd*id;
+
+    // Iluminacion especular de Phong
+    vec3 ks = vec3(1.0,1.0,1.0) * 0.01;
+    vec3 is = id;
+    vec3 viewerVector = normalize(-uViewerPosition+vPosWorld);
+    vec3 reflectionVector = normalize(2.0*vNormal*dot(lightVec, vNormal) - lightVec);
+    float RdotV = clamp(dot(reflectionVector, viewerVector), 0.0, 1.0);
+    vec3 specularIllumination = pow(RdotV, uGlossiness)*ks*is*uKsFactor;
+
+    vec3 phongIllumination = ambientIllumination + diffuseIllumination + specularIllumination;
+    return phongIllumination;
+}
+
 void main(void) {
 
-    float scale1 = 2.;
+    float scale1 =  2.;
     float low = -0.2;
     float high = 0.7;
 
@@ -156,7 +186,10 @@ void main(void) {
     // combino color1 (tierra y rocas) con color2 a partir de la mascara2
     vec3 color=mix(color1,color2,mask2);
 
-    gl_FragColor = vec4(color,1.0);
+    vec3 sunDirection = normalize( vec3(1.0,1.0,1.0) );
 
+    vec3 BRIGHTNESS = directPhong(sunDirection,color);
+
+    gl_FragColor = vec4(BRIGHTNESS.xyz,1.0);
 
 }
