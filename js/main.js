@@ -24,7 +24,10 @@ let app = {
     'catapult': 3.9,
     'animate': function(){
         isAnimated=true;
-    }
+    },
+    'directionalColor': "#7a7563",
+    'ambientColor': "#826952"
+
 }
 
 async function initWebGL() {
@@ -85,16 +88,12 @@ const compileShader = async (
             })
     ]);
 
-
-
     //compile shaders
     return makeShader(shaderSrc, type);
 }
 
 async function initShaders() {
-    let fs_source = document.getElementById('shader-fs').innerHTML;
-
-    let textureFragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER)
+    let textureFragmentShader = await compileShader('../shaders/TextureFS.glsl', gl.FRAGMENT_SHADER)
     let vertexShader = await compileShader('../shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
     let multiTextureFragmentShader = await  compileShader('../shaders/TexturasCompocitionFS.glsl', gl.FRAGMENT_SHADER)
 
@@ -139,7 +138,9 @@ export function setupVertexShaderMatrix(program){
     let projMatrixUniform  = gl.getUniformLocation(program, "projMatrix");
     let ViewerPositionUniform  = gl.getUniformLocation(program, "uViewerPosition");
 
-    let viewerPosition = viewMatrix.slice(12, 15);
+    let tmp = glMatrix.mat4.create();
+    glMatrix.mat4.invert(tmp, viewMatrix)
+    let viewerPosition = tmp.slice(12, 15);
 
     gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
     gl.uniformMatrix4fv(projMatrixUniform, false, projMatrix);
@@ -198,6 +199,10 @@ function GUI (){
     f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(reloadScene)
     f2.add(app, 'animate').name("Disparar");
 
+    let f3 = gui.addFolder('Color');
+
+    f3.addColor(app, 'ambientColor').name("Ambient").onChange(reloadScene)
+    f3.addColor(app, 'directionalColor').name("Directional").onChange(reloadScene)
 }
 
 window.onload= await initWebGL;

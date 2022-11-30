@@ -21,7 +21,7 @@ class Terrain extends RevolutionCurveAlternativeUVs {
             "../../assets/textures/terrain/pasto.jpg"
         ]
 
-        let material = new BlendTextureMaterial(paths, 0.1, 0.1);
+        let material = new BlendTextureMaterial(paths, 0.1, 0.1, 10, 0.2);
 
         super(path, material);
         this.color = colors.grassGreen;
@@ -32,7 +32,7 @@ class Terrain extends RevolutionCurveAlternativeUVs {
             "../../assets/textures/water/TexturesCom_WaterPlain0017_1_seamless_S.jpg"
         ]
 
-        material = new BlendTextureMaterial(paths, 0.2, 0.2, 300);
+        material = new BlendTextureMaterial(paths, 0.2, 0.2, 500, 0.8);
 
         let water = new Plane(3,3, colors.brightBlue, material);
         water.trasladar([0,-0.02,0])

@@ -19,14 +19,27 @@ class CatapultFrame extends Object3D {
         suport.rotar(Math.PI/2,[0,0,1])
         this.addChild(suport)
 
-        material = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.5, 1.5);
+        let scale = 6;
 
-        suport = new Trapezoid(0.2, 0.05,0.4,0.025,colors.wood, material);
+        let materialT = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.1*scale, 0.025*scale);
+        let materialF = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.6, 1.2);
+        let materialS = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor_rotated.png",  0.4*scale,0.025*scale);
+
+        let materials = {
+            'topT': materialT,
+            'bottomT': materialT,
+            'frontT': materialF,
+            'backT': materialF,
+            'leftT': materialS,
+            'rightT': materialS
+        }
+
+        suport = new Trapezoid(0.2, 0.1,0.4,0.025,colors.wood, materials);
         suport.rotar(Math.PI/2,[0,1,0])
         suport.trasladar([0,-0.15,0.1])
         this.addChild(suport);
 
-        suport = new Trapezoid(0.2, 0.05,0.4,0.025,colors.wood, material);
+        suport = new Trapezoid(0.2, 0.1,0.4,0.025,colors.wood, materials);
         suport.rotar(Math.PI/2,[0,1,0])
         suport.trasladar([0,-0.15,-0.1])
         this.addChild(suport);

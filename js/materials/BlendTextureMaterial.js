@@ -1,4 +1,4 @@
-import {gl} from "../main.js";
+import {app, gl} from "../main.js";
 
 function setUniformFloat(key, value, program) {
     let tmp  = gl.getUniformLocation(program, key);
@@ -29,8 +29,17 @@ function initTexture(file){
     return texture;
 }
 
+function hexToRgb(hex) {
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16)/255,
+        g: parseInt(result[2], 16)/255,
+        b: parseInt(result[3], 16)/255
+    } : null;
+}
+
 class BlendTextureMaterial {
-    constructor(paths, uScale, vScale, glossiness = 1) {
+    constructor(paths, uScale, vScale, glossiness = 1, ksFactor = 0.1) {
         this.textures = []
         for (let i=0; i < paths.length; i++) {
             this.textures.push(initTexture(paths[i]))
@@ -38,6 +47,7 @@ class BlendTextureMaterial {
         this.scale = {u: uScale, v: vScale}
 
         this.glossiness = glossiness;
+        this.ksFactor = ksFactor;
     }
 
     apply(){
@@ -47,6 +57,12 @@ class BlendTextureMaterial {
         setUniformFloat("vScale", this.scale.v, program);
 
         gl.uniform1f(gl.getUniformLocation(program, 'uGlossiness'), this.glossiness);
+        gl.uniform1f(gl.getUniformLocation(program, 'uKsFactor'), this.ksFactor);
+
+        let rgb = hexToRgb(app.directionalColor);
+        gl.uniform3f(gl.getUniformLocation(program, 'directColor'), rgb.r, rgb.g, rgb.b);
+        rgb = hexToRgb(app.ambientColor);
+        gl.uniform3f(gl.getUniformLocation(program, 'ia'), rgb.r, rgb.g, rgb.b);
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.textures[0]);

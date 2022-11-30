@@ -31,7 +31,7 @@ class Floor extends Object3D {
         floor.trasladar([0,0.19/2,0])
         this.addChild(floor)
 
-        let detailMaterialT = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, w, 50, 0.30);
+        let detailMaterialT = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, w, 20, 0.45);
 
         let detailMaterialS = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", w, 0.01, 50, 0.30);
 

@@ -14,6 +14,9 @@ uniform vec3 uViewerPosition;
 uniform float uGlossiness;
 uniform float uKsFactor;
 
+uniform vec3 directColor;
+uniform vec3 ia;
+
 // Perlin Noise
 vec3 mod289(vec3 x)
 {
@@ -109,27 +112,30 @@ float cnoise(vec3 P)
     return 2.2 * n_xyz;
 }
 
-vec3 directPhong(vec3 lightVec, vec3 textureColor) {
-
-    // Iluminacion ambiental de Phong
+// Iluminacion ambiental de Phong
+vec3 phongAmbientIllumination(vec3 textureColor) {
     vec3 ka = textureColor.xyz;
-    vec3 ia = vec3(1.0,0.71,0.0);
     vec3 ambientIllumination = ka * ia * 0.1;
 
+    return ambientIllumination;
+}
+
+vec3 directPhong(vec3 lightVec, vec3 textureColor) {
+
     // Iluminacion difusa de Phong
-    vec3 kd = ka;
-    vec3 id = vec3(1.0,1.0,1.0);
+    vec3 kd = textureColor.xyz;
+    vec3 id = directColor;
     vec3 diffuseIllumination = clamp(dot(lightVec, vNormal), 0.0, 1.0)*kd*id;
 
     // Iluminacion especular de Phong
-    vec3 ks = vec3(1.0,1.0,1.0) * 0.01;
-    vec3 is = id;
-    vec3 viewerVector = normalize(-uViewerPosition+vPosWorld);
-    vec3 reflectionVector = normalize(2.0*vNormal*dot(lightVec, vNormal) - lightVec);
+    vec3 ks = vec3(1.0,1.0,1.0);
+    vec3 is = directColor;
+    vec3 viewerVector = normalize(uViewerPosition);
+    vec3 reflectionVector = reflect(-lightVec, vNormal);
     float RdotV = clamp(dot(reflectionVector, viewerVector), 0.0, 1.0);
     vec3 specularIllumination = pow(RdotV, uGlossiness)*ks*is*uKsFactor;
 
-    vec3 phongIllumination = ambientIllumination + diffuseIllumination + specularIllumination;
+    vec3 phongIllumination = diffuseIllumination + specularIllumination;
     return phongIllumination;
 }
 
@@ -188,8 +194,11 @@ void main(void) {
 
     vec3 sunDirection = normalize( vec3(1.0,1.0,1.0) );
 
-    vec3 BRIGHTNESS = directPhong(sunDirection,color);
+    vec3 ambientIllumination = phongAmbientIllumination(color);
+    vec3 directIlumination = directPhong(sunDirection,color);
 
-    gl_FragColor = vec4(BRIGHTNESS.xyz,1.0);
+    vec3 resultColor = ambientIllumination + directIlumination;
+
+    gl_FragColor = vec4(resultColor.xyz,1.0);
 
 }

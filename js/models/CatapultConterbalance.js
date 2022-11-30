@@ -11,13 +11,28 @@ class CatapultConterbalance extends Cylinder {
 
         super(0.12, 0.012, colors.black, material);
 
-        let suport = new Trapezoid(0.08,0.05,0.1, 0.015, colors.wood, material);
+        let scale = 2;
+
+        let materialT = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.05 * scale, 0.015 * scale);
+        let materialF = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 2.);
+        let materialS = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor_rotated.png", 0.1*scale, 0.015*scale );
+
+        let materials = {
+            'topT': materialT,
+            'bottomT': materialT,
+            'frontT': materialF,
+            'backT': materialF,
+            'leftT': materialS,
+            'rightT': materialS
+        }
+
+        let suport = new Trapezoid(0.08,0.05,0.1, 0.015, colors.wood, materials);
         suport.rotar(Math.PI/2,[0,1,0])
         suport.rotar(Math.PI/2,[1,0,0])
         suport.trasladar([0,-0.02,0.05])
         this.addChild(suport)
 
-        suport = new Trapezoid(0.08,0.05,0.1, 0.015, colors.wood, material);
+        suport = new Trapezoid(0.08,0.05,0.1, 0.015, colors.wood, materials);
         suport.rotar(Math.PI/2,[0,1,0])
         suport.rotar(Math.PI/2,[1,0,0])
         suport.trasladar([0,-0.02,-0.05])
@@ -25,7 +40,7 @@ class CatapultConterbalance extends Cylinder {
 
         material = new Material("../../assets/textures/ConcreteWall01_MR_1K/ConcreteWall01_1K_BaseColor.png", 1., 1.);
 
-        let materials = {
+        materials = {
             'topT': material,
             'bottomT': material,
             'frontT': material,
