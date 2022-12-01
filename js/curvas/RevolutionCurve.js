@@ -35,7 +35,7 @@ class RevolutionCurve extends Object3D {
         let percent = getPercent(positions);
 
         let rows = positions.length;
-        let cols = 50;
+        let cols = 10;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){

@@ -19,8 +19,8 @@ class Trapezoid2D extends Object3D {
         let normal = [];
         let uv = [];
 
-        let rows = 20;
-        let cols = 20;
+        let rows = 2;
+        let cols = 2;
 
         for (let i=0;i<rows;i++){
             let u=i/(rows-1);

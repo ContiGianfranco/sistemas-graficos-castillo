@@ -19,8 +19,8 @@ class Sphere extends Object3D {
         let normal=[];
         let uv = [];
 
-        let rows = 20;
-        let cols = 20;
+        let rows = 10;
+        let cols = 10;
 
         for (let i=0;i<rows;i++){
             let u=i/(rows-1);

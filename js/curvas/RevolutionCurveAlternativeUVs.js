@@ -12,7 +12,7 @@ class RevolutionCurveAlternativeUVs extends Object3D {
         let normals = path.getPathNormals();
 
         let rows = positions.length;
-        let cols = 50;
+        let cols = 10;
 
         for (let i=0;i<rows;i++){
             for (let j=0;j<cols;j++){
