@@ -1,4 +1,4 @@
-# TP 1 Sistemas Graficos
+# TP 2 Sistemas Graficos
 
 [Deploy](https://contigianfranco.github.io/sistemas-graficos-castillo/)
 
