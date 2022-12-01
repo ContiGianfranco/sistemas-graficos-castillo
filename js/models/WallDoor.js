@@ -13,9 +13,9 @@ class Door extends Object3D {
 
         let scale = 5;
 
-        let materialT = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1/5 * scale, 0.025 * scale);
-        let materialS = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.025 * scale, 1/5 * scale);
-        let materialF = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1/5 * scale, h * scale);
+        let materialT = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1/5 * scale, 0.025 * scale);
+        let materialS = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.025 * scale, 1/5 * scale);
+        let materialF = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1/5 * scale, h * scale);
 
         let materials = {
             'topT': materialT,

@@ -13,7 +13,7 @@ class CastleTowerRoof extends RevolutionCurve {
         ];
         let path = new Path(controlPoints, 0.1);
 
-        let material = new Material("../../assets/textures/factory_wall_1k.blend/textures/factory_wall_diff_1k.jpg", 7., 7., 20, 0.45);
+        let material = new Material("../../docs/assets/textures/factory_wall_1k.blend/textures/factory_wall_diff_1k.jpg", 7., 7., 20, 0.45);
 
         super(path, material);
 

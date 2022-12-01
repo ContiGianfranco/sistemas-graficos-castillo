@@ -16,7 +16,7 @@ class Floor extends Object3D {
         let l = app.length;
 
 
-        let material = new Material("../../assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 11.0, 5.);
+        let material = new Material("../../docs/assets/textures/medieval_blocks_03_1k.blend/textures/medieval_blocks_03_diff_1k.jpg", 11.0, 5.);
 
         let materials = {
             'topT': material,
@@ -31,11 +31,11 @@ class Floor extends Object3D {
         floor.trasladar([0,0.19/2,0])
         this.addChild(floor)
 
-        let detailMaterialT = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, w, 20, 0.45);
+        let detailMaterialT = new Material("../../docs/assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, w, 20, 0.45);
 
-        let detailMaterialS = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", w, 0.01, 50, 0.30);
+        let detailMaterialS = new Material("../../docs/assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", w, 0.01, 50, 0.30);
 
-        let detailMaterialF = new Material("../../assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, 0.01, 50, 0.30);
+        let detailMaterialF = new Material("../../docs/assets/textures/Marble07_MR_1K/Marble07_1K_BaseColor.png", l, 0.01, 50, 0.30);
 
         materials = {
             'topT': detailMaterialT,

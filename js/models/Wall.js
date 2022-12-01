@@ -31,7 +31,7 @@ class Wall extends SweptSurface {
         if (material){
             super(shape, path, material);
         } else {
-            let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 8., 8.);
+            let material = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 8., 8.);
             super(shape, path, material);
         }
 

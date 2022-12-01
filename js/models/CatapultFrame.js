@@ -13,7 +13,7 @@ class CatapultFrame extends Object3D {
         let arm = new CatapultArm(0);
         this.addChild(arm)
 
-        let material = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 3., 3.);
+        let material = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 3., 3.);
 
         let suport = new Cylinder(0.25,0.019,colors.black, material);
         suport.rotar(Math.PI/2,[0,0,1])
@@ -21,9 +21,9 @@ class CatapultFrame extends Object3D {
 
         let scale = 6;
 
-        let materialT = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.1*scale, 0.025*scale);
-        let materialF = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.6, 1.2);
-        let materialS = new Material("../../assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor_rotated.png",  0.4*scale,0.025*scale);
+        let materialT = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.1*scale, 0.025*scale);
+        let materialF = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.6, 1.2);
+        let materialS = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor_rotated.png",  0.4*scale,0.025*scale);
 
         let materials = {
             'topT': materialT,
