@@ -15,7 +15,7 @@ class Torch extends Object3D {
         this.addChild(new Sphere(0.015,colors.stoneGrey, material));
 
 
-        let materialT = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.055*6, 0.006*10);
+        let materialT = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.055*6, 0.006*10);
 
         let cylinder = new Cylinder(0.055, 0.006, colors.wood, materialT);
         cylinder.trasladar([0,-0.04,0])

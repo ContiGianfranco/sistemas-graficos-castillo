@@ -7,15 +7,15 @@ import {Material} from "../materials/Material.js";
 class CatapultConterbalance extends Cylinder {
 
     constructor() {
-        let material = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 2.);
+        let material = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 2.);
 
         super(0.12, 0.012, colors.black, material);
 
         let scale = 2;
 
-        let materialT = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.05 * scale, 0.015 * scale);
-        let materialF = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 2.);
-        let materialS = new Material("../../docs/assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor_rotated.png", 0.1*scale, 0.015*scale );
+        let materialT = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 0.05 * scale, 0.015 * scale);
+        let materialF = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 2.);
+        let materialS = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor_rotated.png", 0.1*scale, 0.015*scale );
 
         let materials = {
             'topT': materialT,
@@ -38,7 +38,7 @@ class CatapultConterbalance extends Cylinder {
         suport.trasladar([0,-0.02,-0.05])
         this.addChild(suport)
 
-        material = new Material("../../docs/assets/textures/ConcreteWall01_MR_1K/ConcreteWall01_1K_BaseColor.png", 1., 1.);
+        material = new Material("./assets/textures/ConcreteWall01_MR_1K/ConcreteWall01_1K_BaseColor.png", 1., 1.);
 
         materials = {
             'topT': material,

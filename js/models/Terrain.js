@@ -16,9 +16,9 @@ class Terrain extends RevolutionCurveAlternativeUVs {
         let path = new Path(controlPoints, 0.1);
 
         let paths = [
-            "../../docs/assets/textures/terrain/tierra.jpg",
-            "../../docs/assets/textures/terrain/roca.jpg",
-            "../../docs/assets/textures/terrain/pasto.jpg"
+            "./assets/textures/terrain/tierra.jpg",
+            "./assets/textures/terrain/roca.jpg",
+            "./assets/textures/terrain/pasto.jpg"
         ]
 
         let material = new BlendTextureMaterial(paths, 0.1, 0.1, 100, 0.1);
@@ -27,9 +27,9 @@ class Terrain extends RevolutionCurveAlternativeUVs {
         this.color = colors.grassGreen;
 
         paths = [
-            "../../docs/assets/textures/water/TexturesCom_WaterPlain0012_1_seamless_S.jpg",
-            "../../docs/assets/textures/water/TexturesCom_WaterPlain0015_1_seamless_S.jpg",
-            "../../docs/assets/textures/water/TexturesCom_WaterPlain0017_1_seamless_S.jpg"
+            "./assets/textures/water/TexturesCom_WaterPlain0012_1_seamless_S.jpg",
+            "./assets/textures/water/TexturesCom_WaterPlain0015_1_seamless_S.jpg",
+            "./assets/textures/water/TexturesCom_WaterPlain0017_1_seamless_S.jpg"
         ]
 
         material = new BlendTextureMaterial(paths, 0.2, 0.2, 500, 0.8);

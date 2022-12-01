@@ -19,7 +19,7 @@ class Tower extends RevolutionCurve {
         ];
         let path = new Path(controlPoints, 0.1);
 
-        let material = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+        let material = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
 
         super(path, material);
 

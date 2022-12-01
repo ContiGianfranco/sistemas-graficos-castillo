@@ -18,7 +18,7 @@ class Catapult extends Object3D {
         let body = new CatapultBody();
         this.addChild(body);
 
-        let material = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+        let material = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
 
         let sphere = new Sphere(0,colors.stoneGrey, material);
         this.addChild(sphere);
@@ -31,7 +31,7 @@ class Catapult extends Object3D {
     }
 
     animate(time){
-        let material = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+        let material = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
 
         if (time === 0){
             this.childes[0].animate(time);

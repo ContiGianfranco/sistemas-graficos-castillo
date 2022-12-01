@@ -94,10 +94,10 @@ const compileShader = async (
 }
 
 async function initShaders() {
-    let textureFragmentShader = await compileShader('../docs/shaders/TextureFS.glsl', gl.FRAGMENT_SHADER)
-    let vertexShader = await compileShader('../docs/shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
-    let multiTextureFragmentShader = await  compileShader('../docs/shaders/TexturasCompocitionFS.glsl', gl.FRAGMENT_SHADER)
-    let lightColorFragmentShader = await  compileShader('../docs/shaders/LightFS.glsl', gl.FRAGMENT_SHADER)
+    let textureFragmentShader = await compileShader('./shaders/TextureFS.glsl', gl.FRAGMENT_SHADER)
+    let vertexShader = await compileShader('./shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
+    let multiTextureFragmentShader = await  compileShader('./shaders/TexturasCompocitionFS.glsl', gl.FRAGMENT_SHADER)
+    let lightColorFragmentShader = await  compileShader('./shaders/LightFS.glsl', gl.FRAGMENT_SHADER)
 
     window.glTextureProgram = gl.createProgram();
 

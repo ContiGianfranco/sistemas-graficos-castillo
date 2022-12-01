@@ -13,9 +13,9 @@ class WallEntrance extends Object3D {
 
         let h = app.wallHigth*0.7;
 
-        let materialT = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 0.11 * 20, 1/15 * 20);
-        let materialF = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 1/15 * 20, h * 20);
-        let materialS = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 0.11 * 20, h * 20);
+        let materialT = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 0.11 * 20, 1/15 * 20);
+        let materialF = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 1/15 * 20, h * 20);
+        let materialS = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 0.11 * 20, h * 20);
 
         let materials = {
             'topT': materialT,
@@ -34,9 +34,9 @@ class WallEntrance extends Object3D {
         side.trasladar([2/15,h/2,0])
         this.addChild(side)
 
-        materialT = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 1/3 * 20, 0.11 * 20);
-        materialF = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 1/3 * 20, 1/15 * 20 );
-        materialS = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 0.11 * 20, 1/15 * 20 );
+        materialT = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 1/3 * 20, 0.11 * 20);
+        materialF = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 1/3 * 20, 1/15 * 20 );
+        materialS = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 0.11 * 20, 1/15 * 20 );
 
         materials = {
             'topT': materialT,
@@ -51,7 +51,7 @@ class WallEntrance extends Object3D {
         top.trasladar([0,h+1/30,0])
         this.addChild(top)
 
-        let material = new Material("../../docs/assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 8./3, 8.);
+        let material = new Material("./assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 8./3, 8.);
 
         let wall = new Wall(material);
         wall.escalar([1/3,1,1]);
