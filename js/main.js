@@ -97,12 +97,19 @@ async function initShaders() {
     let textureFragmentShader = await compileShader('../shaders/TextureFS.glsl', gl.FRAGMENT_SHADER)
     let vertexShader = await compileShader('../shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
     let multiTextureFragmentShader = await  compileShader('../shaders/TexturasCompocitionFS.glsl', gl.FRAGMENT_SHADER)
+    let lightColorFragmentShader = await  compileShader('../shaders/LightFS.glsl', gl.FRAGMENT_SHADER)
 
     window.glTextureProgram = gl.createProgram();
 
     gl.attachShader(glTextureProgram, vertexShader);
     gl.attachShader(glTextureProgram, textureFragmentShader);
     gl.linkProgram(glTextureProgram);
+
+    window.glLightColorProgram = gl.createProgram();
+
+    gl.attachShader(glLightColorProgram, vertexShader);
+    gl.attachShader(glLightColorProgram, lightColorFragmentShader);
+    gl.linkProgram(glLightColorProgram);
 
     if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
         alert("Unable to initialize the textures shader program.");
