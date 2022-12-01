@@ -17,6 +17,7 @@ class Sphere extends Object3D {
     constructor(rad, color, material) {
         let pos = [];
         let normal=[];
+        let uv = [];
 
         let rows = 20;
         let cols = 20;
@@ -37,6 +38,9 @@ class Sphere extends Object3D {
                 normal.push(n[0]);
                 normal.push(n[1]);
                 normal.push(n[2]);
+
+                uv.push(u);
+                uv.push(v);
             }
         }
 
@@ -52,6 +56,10 @@ class Sphere extends Object3D {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
         trianglesNormalBuffer.itemSize = 3;
         trianglesNormalBuffer.numItems = normal.length / 3;
+
+        let trianglesUvBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 
         let index=[];
 
@@ -74,7 +82,7 @@ class Sphere extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, null,material);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer, trianglesUvBuffer,material);
         this.color = color;
     }
 

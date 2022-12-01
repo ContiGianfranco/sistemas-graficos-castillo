@@ -31,16 +31,18 @@ class Catapult extends Object3D {
     }
 
     animate(time){
+        let material = new Material("../../assets/textures/large_sandstone_blocks_01_1k.blend/textures/large_sandstone_blocks_01_diff_1k.jpg", 7., 7.);
+
         if (time === 0){
             this.childes[0].animate(time);
-            this.childes[2] = new Sphere(0, colors.stoneGrey);
+            this.childes[2] = new Sphere(0, colors.stoneGrey, material);
             this.routePos = 0;
         } else if (time < 1){
             this.childes[0].animate(time);
         } else {
             this.childes[0].animate(1);
             if (this.route.length > this.routePos){
-                let sphere = new Sphere(0.05, colors.stoneGrey);
+                let sphere = new Sphere(0.05, colors.stoneGrey, material);
                 let pos = this.route[this.routePos];
                 sphere.trasladar([pos.x, pos.y, pos.z])
                 this.childes[2] = sphere;

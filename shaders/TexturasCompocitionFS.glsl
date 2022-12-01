@@ -221,13 +221,16 @@ void main(void) {
     vec3 color=mix(color1,color2,mask2);
 
     vec3 sunDirection = normalize( vec3(1.0,1.0,1.0) );
-    vec3 lightPos1 = vec3(0.0,0.2,0.5);
+    vec3 lightPos1 = vec3(-0.4,0.0675,0.6);
+    vec3 lightPos2 = vec3(0.4,0.0675,0.6);
+
 
     vec3 ambientIllumination = phongAmbientIllumination(color);
     vec3 directIlumination = directPhong(sunDirection,color);
-    vec3 puntualIlumination = puntualPhong(lightPos1,color);
+    vec3 puntualIlumination1 = puntualPhong(lightPos1,color);
+    vec3 puntualIlumination2 = puntualPhong(lightPos2,color);
 
-    vec3 resultColor = ambientIllumination + directIlumination + puntualIlumination;
+    vec3 resultColor = ambientIllumination + directIlumination + puntualIlumination1 + puntualIlumination2;
 
     gl_FragColor = vec4(resultColor.xyz,1.0);
 
