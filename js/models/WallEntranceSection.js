@@ -6,7 +6,7 @@ import {Object3D} from "../object3D/Object3D.js";
 class WallEntranceSection extends Object3D {
 
     constructor(scale) {
-        super(null,null,null);
+        super(null,null,null,null, null);
 
         let entrance = new WallEntrance();
         entrance.rotar(Math.PI/2, [0,1,0]);

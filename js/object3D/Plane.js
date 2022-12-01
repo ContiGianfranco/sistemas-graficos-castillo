@@ -12,12 +12,13 @@ function getPos(u,v,length, high){
 
 class Plane extends Object3D {
 
-    constructor(length, high, color) {
+    constructor(length, high, color, material) {
         let pos = [];
-        let normal=[];
+        let normal = [];
+        let uv = [];
 
-        let rows = 20;
-        let cols = 20;
+        let rows = 2;
+        let cols = 2;
 
         for (let i=0;i<rows;i++){
             let u=i/(rows-1);
@@ -35,6 +36,9 @@ class Plane extends Object3D {
                 normal.push(n[0]);
                 normal.push(n[1]);
                 normal.push(n[2]);
+
+                uv.push(u);
+                uv.push(v);
             }
         }
 
@@ -50,6 +54,10 @@ class Plane extends Object3D {
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normal), gl.STATIC_DRAW);
         trianglesNormalBuffer.itemSize = 3;
         trianglesNormalBuffer.numItems = normal.length / 3;
+
+        let trianglesUvBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, trianglesUvBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
 
         let index=[];
 
@@ -72,7 +80,7 @@ class Plane extends Object3D {
         trianglesIndexBuffer.itemSize = 1;
         trianglesIndexBuffer.numItems = index.length;
 
-        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer);
+        super(trianglesVerticeBuffer,trianglesIndexBuffer,trianglesNormalBuffer,trianglesUvBuffer, material);
         this.color = color;
     }
 

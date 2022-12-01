@@ -4,14 +4,10 @@ import {Camara} from "./camara/Camara.js";
 let mat4=glMatrix.mat4;
 
 let gl = null,
-    canvas = null,
+    canvas = null;
 
-    glProgram = null,
-    fragmentShader = null,
-    vertexShader = null;
-
-let viewMatrix = mat4.create();
-let projMatrix = mat4.create();
+export let viewMatrix = mat4.create();
+export let projMatrix = mat4.create();
 
 let escena = null;
 
@@ -21,7 +17,6 @@ let isAnimated = false;
 let app = {
     'castleSides': 5,
     'doorAngle': Math.PI/3,
-    'shaderMode': 'Default',
     'wallHigth': 0.4,
     'width': 0.7,
     'length': 0.7,
@@ -29,32 +24,35 @@ let app = {
     'catapult': 3.9,
     'animate': function(){
         isAnimated=true;
-    }
+    },
+    'directionalColor': "#7a7563",
+    'ambientColor': "#826952",
+    'punctualColor': "#724b12"
+
 }
 
-function initWebGL(){
+async function initWebGL() {
 
     canvas = document.getElementById("my-canvas");
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    try{
+    try {
         gl = canvas.getContext("webgl");
-    }catch(e){
-        alert(  "Error: Your browser does not appear to support WebGL.");
+    } catch (e) {
+        alert("Error: Your browser does not appear to support WebGL.");
     }
 
-    if(gl) {
+    if (gl) {
 
         setupWebGL();
         GUI();
-        initShaders();
-        setupVertexShaderMatrix();
+        await initShaders();
         tick();
 
-    }else{
-        alert(  "Error: Your browser does not appear to support WebGL.");
+    } else {
+        alert("Error: Your browser does not appear to support WebGL.");
     }
 
 }
@@ -81,31 +79,54 @@ function reloadScene(){
     escena.rotar(-Math.PI/2,[0,1,0])
 }
 
-function initShaders(){
-    //get shader source
-    let fs_source = document.getElementById('shader-fs').innerHTML,
-        vs_source = document.getElementById('shader-vs').innerHTML;
+const compileShader = async (
+    src, type
+) => {
+    const shaderSrc = await Promise.all([
+        fetch(src)
+            .then((value)=> {
+                return value.text()
+            })
+    ]);
 
     //compile shaders
-    vertexShader = makeShader(vs_source, gl.VERTEX_SHADER);
-    fragmentShader = makeShader(fs_source, gl.FRAGMENT_SHADER);
+    return makeShader(shaderSrc, type);
+}
 
-    //create program
-    glProgram = gl.createProgram();
+async function initShaders() {
+    let textureFragmentShader = await compileShader('../shaders/TextureFS.glsl', gl.FRAGMENT_SHADER)
+    let vertexShader = await compileShader('../shaders/vertexShaders.glsl', gl.VERTEX_SHADER)
+    let multiTextureFragmentShader = await  compileShader('../shaders/TexturasCompocitionFS.glsl', gl.FRAGMENT_SHADER)
+    let lightColorFragmentShader = await  compileShader('../shaders/LightFS.glsl', gl.FRAGMENT_SHADER)
 
-    //attach and link shaders to the program
-    gl.attachShader(glProgram, vertexShader);
-    gl.attachShader(glProgram, fragmentShader);
-    gl.linkProgram(glProgram);
+    window.glTextureProgram = gl.createProgram();
 
-    if (!gl.getProgramParameter(glProgram, gl.LINK_STATUS)) {
-        alert("Unable to initialize the shader program.");
+    gl.attachShader(glTextureProgram, vertexShader);
+    gl.attachShader(glTextureProgram, textureFragmentShader);
+    gl.linkProgram(glTextureProgram);
+
+    window.glLightColorProgram = gl.createProgram();
+
+    gl.attachShader(glLightColorProgram, vertexShader);
+    gl.attachShader(glLightColorProgram, lightColorFragmentShader);
+    gl.linkProgram(glLightColorProgram);
+
+    if (!gl.getProgramParameter(glTextureProgram, gl.LINK_STATUS)) {
+        alert("Unable to initialize the textures shader program.");
     }
 
-    //use program
-    gl.useProgram(glProgram);
+    window.glMultiTextureProgram = gl.createProgram();
 
-    setUpShaderMode();
+    gl.attachShader(glMultiTextureProgram, vertexShader);
+    gl.attachShader(glMultiTextureProgram, multiTextureFragmentShader);
+    gl.linkProgram(glMultiTextureProgram);
+
+    if (!gl.getProgramParameter(glMultiTextureProgram, gl.LINK_STATUS)) {
+        alert("Unable to initialize the textures shader program.");
+    }
+    glMultiTextureProgram.samplerUniform0 = gl.getUniformLocation(glMultiTextureProgram, "uSampler0");
+    glMultiTextureProgram.samplerUniform1 = gl.getUniformLocation(glMultiTextureProgram, "uSampler1");
+    glMultiTextureProgram.samplerUniform2 = gl.getUniformLocation(glMultiTextureProgram, "uSampler2");
 }
 
 function makeShader(src, type){
@@ -120,12 +141,18 @@ function makeShader(src, type){
     return shader;
 }
 
-function setupVertexShaderMatrix(){
-    let viewMatrixUniform  = gl.getUniformLocation(glProgram, "viewMatrix");
-    let projMatrixUniform  = gl.getUniformLocation(glProgram, "projMatrix");
+export function setupVertexShaderMatrix(program){
+    let viewMatrixUniform  = gl.getUniformLocation(program, "viewMatrix");
+    let projMatrixUniform  = gl.getUniformLocation(program, "projMatrix");
+    let ViewerPositionUniform  = gl.getUniformLocation(program, "uViewerPosition");
+
+    let tmp = glMatrix.mat4.create();
+    glMatrix.mat4.invert(tmp, viewMatrix)
+    let viewerPosition = tmp.slice(12, 15);
 
     gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
     gl.uniformMatrix4fv(projMatrixUniform, false, projMatrix);
+    gl.uniform3f(ViewerPositionUniform, viewerPosition[0], viewerPosition[1], viewerPosition[2]);
 }
 
 function drawScene(){
@@ -136,24 +163,8 @@ function drawScene(){
     escena.draw(m1, m2);
 }
 
-function setUpShaderMode() {
-    if (app.shaderMode === 'Default') {
-        setUniformUnsignedInteger("shaderMode", 1)
-    } else {
-        setUniformUnsignedInteger("shaderMode", 0)
-    }
-
-}
-
-function setUniformUnsignedInteger(key, value) {
-    let tmp  = gl.getUniformLocation(glProgram, key);
-    gl.uniform1i(tmp, value);
-}
-
 function updateCamara(){
     window.camara.setViewMatrix(viewMatrix);
-    let viewMatrixUniform  = gl.getUniformLocation(glProgram, "viewMatrix");
-    gl.uniformMatrix4fv(viewMatrixUniform, false, viewMatrix);
 }
 
 function animate(){
@@ -196,12 +207,13 @@ function GUI (){
     f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(reloadScene)
     f2.add(app, 'animate').name("Disparar");
 
-    let f3 = gui.addFolder('Rendering');
+    let f3 = gui.addFolder('Color');
 
-    f3.add(app, 'shaderMode', ['Default', 'Normales']).name("Render mode").onChange(setUpShaderMode)
-
+    f3.addColor(app, 'ambientColor').name("Ambient").onChange(reloadScene)
+    f3.addColor(app, 'directionalColor').name("Directional").onChange(reloadScene)
+    f3.addColor(app, 'punctualColor').name("Directional").onChange(reloadScene)
 }
 
-window.onload=initWebGL;
+window.onload= await initWebGL;
 
-export {gl, glProgram, app}
+export {gl, app}

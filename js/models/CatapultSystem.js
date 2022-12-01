@@ -5,7 +5,7 @@ import {Catapult} from "./Catapult.js";
 class CatapultSystem extends Object3D {
 
     constructor() {
-        super(null, null, null);
+        super(null, null, null, null, null);
 
         let catapult = new Catapult();
         catapult.rotar(app.catapult,[0,1,0])

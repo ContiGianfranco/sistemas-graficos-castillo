@@ -8,7 +8,7 @@ class FullWall extends Object3D {
 
     constructor() {
 
-        super(null,null,null);
+        super(null,null,null,null, null);
     }
 
     init(){

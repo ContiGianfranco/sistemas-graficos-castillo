@@ -4,74 +4,14 @@
         <title></title>        
         <style>
             body{ margin: 0; padding: 0; overflow: hidden; }
-            canvas{ background-color: lightblue; }
+            canvas{ background-color: steelblue; }
 			textarea{ background-color: black;}
         </style>
     </head>
     <body>
-
         <canvas id="my-canvas"></canvas>
-
         <script type="text/javascript" src="js/lib/gl-matrix.js"></script>
-
         <script type="text/javascript" src="js/lib/dat.gui.min.js"></script>
-        
-        <script id="shader-vs" type="x-shader/x-vertex">
-
-            precision highp float;
-
-            attribute vec3 aVertexPosition;
-            attribute vec3 aVertexNormal;
-
-            uniform mat4 modelMatrix;            
-            uniform mat4 viewMatrix;
-            uniform mat4 projMatrix;
-
-            uniform mat4 normalMatrix;
-
-            varying vec3 vNormal;    
-            varying vec3 vPosWorld;  
-
-            void main(void) {
-                gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aVertexPosition, 1.0);
-
-                vPosWorld=(modelMatrix*vec4(aVertexPosition,1.0)).xyz;    //la posicion en coordenadas de mundo
-                vNormal=(normalMatrix*vec4(aVertexNormal,1.0)).xyz;       //la normal en coordenadas de mundo                
-                
-            }
-        </script>
-
-        <script id="shader-fs" type="x-shader/x-fragment">
-
-            precision highp float;
-
-            uniform int shaderMode;
-            uniform vec3 uColor;
-
-            varying vec3 vNormal;
-            varying vec3 vPosWorld;
-
-            vec3 lightVec;
-            vec3 diffColor;
-            vec3 color;
-
-            void main(void) {
-
-                lightVec=normalize(vec3(0.0,3.0,5.0)-vPosWorld);
-	            diffColor=uColor;
-	            color=dot(lightVec,vNormal)*diffColor+vec3(0.2,0.2,0.2);
-	            color= mix(uColor, color, 0.3);
-
-                if (shaderMode == 0) {
-                    diffColor=mix(vec3(0.7,0.7,0.7),vNormal,0.5);
-                    color=dot(lightVec,vNormal)*diffColor+vec3(0.2,0.2,0.2);
-                }
-
-                gl_FragColor = vec4(color,1.0);
-            }
-        </script>
-        
         <script type="module" src="js/main.js"></script>
-
     </body>
 </html>

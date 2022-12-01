@@ -3,11 +3,12 @@ import {Terrain} from "../models/Terrain.js";
 import {FullWall} from "../models/FullWall.js";
 import {Castle} from "../models/Castle.js";
 import {CatapultSystem} from "../models/CatapultSystem.js";
+import {Torch} from "../models/Torch.js";
 
 class Scene extends Object3D {
 
     constructor() {
-        super(null,null,null);
+        super(null,null,null,null, null);
     }
 
     init(){
@@ -24,6 +25,14 @@ class Scene extends Object3D {
         this.addChild(muralla);
 
         this.addChild(new Castle());
+
+        let torch = new Torch();
+        torch.trasladar([0.6,0.0675,-0.4])
+        this.addChild(torch);
+
+        torch = new Torch();
+        torch.trasladar([0.6,0.0675,0.4])
+        this.addChild(torch);
     }
 
     animate(time){
