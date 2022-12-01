@@ -26,7 +26,8 @@ let app = {
         isAnimated=true;
     },
     'directionalColor': "#7a7563",
-    'ambientColor': "#826952"
+    'ambientColor': "#826952",
+    'punctualColor': "#724b12"
 
 }
 
@@ -203,6 +204,7 @@ function GUI (){
 
     f3.addColor(app, 'ambientColor').name("Ambient").onChange(reloadScene)
     f3.addColor(app, 'directionalColor').name("Directional").onChange(reloadScene)
+    f3.addColor(app, 'punctualColor').name("Directional").onChange(reloadScene)
 }
 
 window.onload= await initWebGL;

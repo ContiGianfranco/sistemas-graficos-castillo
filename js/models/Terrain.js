@@ -21,7 +21,7 @@ class Terrain extends RevolutionCurveAlternativeUVs {
             "../../assets/textures/terrain/pasto.jpg"
         ]
 
-        let material = new BlendTextureMaterial(paths, 0.1, 0.1, 10, 0.2);
+        let material = new BlendTextureMaterial(paths, 0.1, 0.1, 100, 0.1);
 
         super(path, material);
         this.color = colors.grassGreen;

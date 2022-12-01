@@ -63,6 +63,8 @@ class BlendTextureMaterial {
         gl.uniform3f(gl.getUniformLocation(program, 'directColor'), rgb.r, rgb.g, rgb.b);
         rgb = hexToRgb(app.ambientColor);
         gl.uniform3f(gl.getUniformLocation(program, 'ia'), rgb.r, rgb.g, rgb.b);
+        rgb = hexToRgb(app.punctualColor);
+        gl.uniform3f(gl.getUniformLocation(program, 'punctualColor'), rgb.r, rgb.g, rgb.b);
 
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.textures[0]);
