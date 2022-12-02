@@ -8,6 +8,7 @@ let gl = null,
 
 export let viewMatrix = mat4.create();
 export let projMatrix = mat4.create();
+export let projectilePos = [0.0,0.0,0.0];
 
 let escena = null;
 
@@ -28,7 +29,6 @@ let app = {
     'directionalColor': "#7a7563",
     'ambientColor': "#826952",
     'punctualColor': "#724b12"
-
 }
 
 async function initWebGL() {
@@ -178,8 +178,13 @@ function animate(){
     escena.animate(time)
 }
 
+function getProjectilePos(){
+    projectilePos = escena.getProjectilePos()
+}
+
 function tick(){
     requestAnimationFrame(tick);
+    getProjectilePos();
     drawScene();
     if (isAnimated){
         animate();

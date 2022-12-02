@@ -10,7 +10,7 @@ class CatapultFrame extends Object3D {
     constructor() {
         super(null, null, null,null, null);
 
-        let arm = new CatapultArm(0);
+        let arm = new CatapultArm();
         this.addChild(arm)
 
         let material = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 3., 3.);
@@ -45,12 +45,19 @@ class CatapultFrame extends Object3D {
         this.addChild(suport);
 
         this.alfa = Math.PI/4
+        this.oldfAlfa = 0;
     }
 
     animate(time){
-        let arm = new CatapultArm(time*this.alfa);
-        arm.rotar(time*this.alfa, [1,0,0]);
-        this.childes[0] = arm;
+        let delta = time*this.alfa - this.oldfAlfa;
+        this.oldfAlfa = time*this.alfa
+        let arm = this.childes[0];
+        arm.rotar(delta, [1,0,0]);
+        arm.animate(delta);
+    }
+
+    getProjectilePos(){
+        return this.childes[0].getProjectilePos();
     }
 }
 

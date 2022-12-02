@@ -18,6 +18,8 @@ uniform vec3 directColor;
 uniform vec3 punctualColor;
 uniform vec3 ia;
 
+uniform vec3 uProjectilePos;
+
 // Perlin Noise
 vec3 mod289(vec3 x)
 {
@@ -229,8 +231,9 @@ void main(void) {
     vec3 directIlumination = directPhong(sunDirection,color);
     vec3 puntualIlumination1 = puntualPhong(lightPos1,color);
     vec3 puntualIlumination2 = puntualPhong(lightPos2,color);
+    vec3 projectileIlumination = puntualPhong(uProjectilePos,color);
 
-    vec3 resultColor = ambientIllumination + directIlumination + puntualIlumination1 + puntualIlumination2;
+    vec3 resultColor = ambientIllumination + directIlumination + puntualIlumination1 + puntualIlumination2 + projectileIlumination;
 
     gl_FragColor = vec4(resultColor.xyz,1.0);
 

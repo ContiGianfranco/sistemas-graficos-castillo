@@ -1,4 +1,4 @@
-import {gl, setupVertexShaderMatrix} from "../main.js";
+import { gl, projectilePos, setupVertexShaderMatrix} from "../main.js";
 
 
 class Object3D {
@@ -44,6 +44,8 @@ class Object3D {
             if (this.material){
                 this.material.apply();
             }
+
+            gl.uniform3f(gl.getUniformLocation(program, "uProjectilePos"), projectilePos[0], projectilePos[1], projectilePos[2]);
 
             let vertexPositionAttribute = gl.getAttribLocation(program, "aVertexPosition");
             gl.enableVertexAttribArray(vertexPositionAttribute);

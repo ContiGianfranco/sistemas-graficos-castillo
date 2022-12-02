@@ -25,6 +25,8 @@ uniform vec3 directColor;
 uniform vec3 punctualColor;
 uniform vec3 ia;
 
+uniform vec3 uProjectilePos;
+
 // Iluminacion ambiental de Phong
 vec3 phongAmbientIllumination(vec4 textureColor) {
     vec3 ka = textureColor.xyz;
@@ -93,8 +95,9 @@ void main(void) {
     vec3 directIlumination = directPhong(sunDirection,textureColor);
     vec3 puntualIlumination1 = puntualPhong(lightPos1,textureColor);
     vec3 puntualIlumination2 = puntualPhong(lightPos2,textureColor);
+    vec3 projectileIlumination = puntualPhong(uProjectilePos,textureColor);
 
-    vec3 resultColor = ambientIllumination + directIlumination + puntualIlumination1 + puntualIlumination2;
+    vec3 resultColor = ambientIllumination + directIlumination + puntualIlumination1 + puntualIlumination2 + projectileIlumination;
 
     gl_FragColor = vec4(resultColor.xyz,1.0);
 }

@@ -2,21 +2,17 @@ import colors from "../constants/colors.js";
 import {Cube} from "../object3D/Cube.js";
 import {CatapultConterbalance} from "./CatapultConterbalance.js";
 import {Object3D} from "../object3D/Object3D.js";
-import {Sphere} from "../object3D/Sphere.js";
 import {Material} from "../materials/Material.js";
+import {Projectile} from "./Projectile.js";
 
 class CatapultArm extends Object3D {
 
-    constructor(alfa) {
+    constructor() {
         super(null,null,null);
 
-        let material = new Material("./assets/textures/WoodenPlanks01_MR_1K/WoodenPlanks01_1K_BaseColor.png", 1., 1.);
-
-        if (alfa < Math.PI/4){
-            let sphere = new Sphere(0.05, colors.stoneGrey, material);
-            sphere.trasladar([0,0.07,-0.6])
-            this.addChild(sphere);
-        }
+        let sphere = new Projectile();
+        sphere.trasladar([0,0.07,-0.6])
+        this.addChild(sphere);
 
         let scale = 2;
 
@@ -56,9 +52,26 @@ class CatapultArm extends Object3D {
 
 
         let balance = new CatapultConterbalance();
-        balance.rotar(alfa, [0,1,0])
-        balance.trasladar([-0.13*Math.sin(alfa),0,0.13*Math.cos(alfa)]);
+        balance.trasladar([0,0,0.13]);
         this.addChild(balance)
+
+        this.alfa = 0;
+    }
+
+    animate(delta) {
+        this.childes[3].rotar(delta, [0,1,0])
+
+        this.alfa += delta
+
+        if (this.alfa === Math.PI/4 && delta !== 0){
+            this.childes[0].trasladar([0,-5,0])
+        } else if (this.alfa === 0){
+            this.childes[0].trasladar([0,5,0])
+        }
+    }
+
+    getProjectilePos(){
+        return this.childes[0].getProjectilePos();
     }
 
 }

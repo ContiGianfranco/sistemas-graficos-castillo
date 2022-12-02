@@ -15,6 +15,10 @@ class CatapultSystem extends Object3D {
     animate(time){
         this.childes[0].animate(time)
     }
+
+    getProjectilePos(){
+        return this.childes[0].getProjectilePos();
+    }
 }
 
 export {CatapultSystem}
