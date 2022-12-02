@@ -30,7 +30,7 @@ uniform vec3 uProjectilePos;
 // Iluminacion ambiental de Phong
 vec3 phongAmbientIllumination(vec4 textureColor) {
     vec3 ka = textureColor.xyz;
-    vec3 ambientIllumination = ka * ia * 0.1;
+    vec3 ambientIllumination = ka * ia;
 
     return ambientIllumination;
 }

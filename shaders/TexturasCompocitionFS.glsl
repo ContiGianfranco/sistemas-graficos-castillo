@@ -118,7 +118,7 @@ float cnoise(vec3 P)
 // Iluminacion ambiental de Phong
 vec3 phongAmbientIllumination(vec3 textureColor) {
     vec3 ka = textureColor.xyz;
-    vec3 ambientIllumination = ka * ia * 0.1;
+    vec3 ambientIllumination = ka * ia;
 
     return ambientIllumination;
 }

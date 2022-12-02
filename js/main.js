@@ -27,7 +27,7 @@ let app = {
         isAnimated=true;
     },
     'directionalColor': "#7a7563",
-    'ambientColor': "#826952",
+    'ambientColor': "#34271b",
     'punctualColor': "#724b12"
 }
 
