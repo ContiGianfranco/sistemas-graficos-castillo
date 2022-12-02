@@ -140,7 +140,7 @@ vec3 puntualPhong(vec3 lightPos, vec3 textureColor) {
     // Iluminacion especular de Phong
     vec3 ks = vec3(1.0,1.0,1.0);
     vec3 is = lightColor;
-    vec3 viewerVector = normalize(uViewerPosition);
+    vec3 viewerVector = normalize(uViewerPosition - vPosWorld);
     vec3 reflectionVector = reflect(-lightVec, vNormal);
     float RdotV = clamp(dot(reflectionVector, viewerVector), 0.0, 1.0);
     vec3 specularIllumination = pow(RdotV, uGlossiness)*ks*is*uKsFactor;
@@ -160,7 +160,7 @@ vec3 directPhong(vec3 lightVec, vec3 textureColor) {
     // Iluminacion especular de Phong
     vec3 ks = vec3(1.0,1.0,1.0);
     vec3 is = directColor;
-    vec3 viewerVector = normalize(uViewerPosition);
+    vec3 viewerVector = normalize(uViewerPosition - vPosWorld);
     vec3 reflectionVector = reflect(-lightVec, vNormal);
     float RdotV = clamp(dot(reflectionVector, viewerVector), 0.0, 1.0);
     vec3 specularIllumination = pow(RdotV, uGlossiness)*ks*is*uKsFactor;
