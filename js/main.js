@@ -214,9 +214,9 @@ function GUI (){
 
     let f3 = gui.addFolder('Color');
 
-    f3.addColor(app, 'ambientColor').name("Ambient").onChange(reloadScene)
-    f3.addColor(app, 'directionalColor').name("Directional").onChange(reloadScene)
-    f3.addColor(app, 'punctualColor').name("Directional").onChange(reloadScene)
+    f3.addColor(app, 'ambientColor').name("Ambient")
+    f3.addColor(app, 'directionalColor').name("Directional")
+    f3.addColor(app, 'punctualColor').name("Directional")
 }
 
 window.onload= await initWebGL;
