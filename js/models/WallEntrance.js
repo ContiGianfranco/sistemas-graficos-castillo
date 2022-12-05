@@ -65,9 +65,16 @@ class WallEntrance extends Object3D {
 
 
         let alfa = app.doorAngle;
+        this.oldDoorAngle = alfa;
         let door = new Door();
         door.rotar(alfa, [1,0,0])
         this.addChild(door);
+    }
+
+    updateDoor(){
+        let alfa = app.doorAngle - this.oldDoorAngle;
+        this.childes[5].rotar(alfa, [1,0,0]);
+        this.oldDoorAngle = app.doorAngle;
     }
 
 }

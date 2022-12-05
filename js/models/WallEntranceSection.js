@@ -18,6 +18,10 @@ class WallEntranceSection extends Object3D {
         this.addChild(torre);
     }
 
+    updateDoor(){
+        this.childes[0].updateDoor();
+    }
+
 }
 
 export {WallEntranceSection}

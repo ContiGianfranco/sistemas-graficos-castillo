@@ -35,6 +35,24 @@ class Scene extends Object3D {
         this.addChild(torch);
     }
 
+    updateWall(){
+        let wall = new FullWall();
+        wall.init();
+        this.childes[2] = wall;
+    }
+
+    rotateCatapult(){
+        this.childes[0].updateAngle();
+    }
+
+    updateDoor(){
+        this.childes[2].updateDoor();
+    }
+
+    updateCastle(){
+        this.childes[3] = new Castle();
+    }
+
     animate(time){
         this.childes[0].animate(time);
     }

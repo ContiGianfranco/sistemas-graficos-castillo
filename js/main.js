@@ -192,6 +192,23 @@ function tick(){
     updateCamara();
 }
 
+function updateWall(){
+    escena.updateWall();
+}
+
+function updateDoor(){
+    escena.updateDoor();
+}
+
+function rotateCatapult(){
+    escena.rotateCatapult();
+}
+
+function updateCastle(){
+    escena.updateCastle();
+}
+
+
 function GUI (){
 
     let gui = new dat.GUI();
@@ -199,17 +216,17 @@ function GUI (){
     // definimos una carpeta comandos en la variable f1
     let f1 = gui.addFolder('Castillo');
 
-    f1.add(app, 'castleSides',4,8).name("Lados muralla").step(1).onChange(reloadScene)
-    f1.add(app, 'wallHigth',0.2,1.8).name("Altura muralla").step(0.1).onChange(reloadScene)
-    f1.add(app, 'doorAngle',0,Math.PI/2).name("Entrada").step(0.01).onChange(reloadScene)
+    f1.add(app, 'castleSides',4,8).name("Lados muralla").step(1).onChange(updateWall)
+    f1.add(app, 'wallHigth',0.2,1.8).name("Altura muralla").step(0.1).onChange(updateWall)
+    f1.add(app, 'doorAngle',0,Math.PI/2).name("Entrada").step(0.01).onChange(updateDoor)
 
-    f1.add(app, 'floors',1,4).name("Numero de pisos").step(1).onChange(reloadScene)
-    f1.add(app, 'width',0.2,1).name("Ancho").step(0.1).onChange(reloadScene)
-    f1.add(app, 'length',0.2,1).name("Largo").step(0.1).onChange(reloadScene)
+    f1.add(app, 'floors',1,4).name("Numero de pisos").step(1).onChange(updateCastle)
+    f1.add(app, 'width',0.2,1).name("Ancho").step(0.1).onChange(updateCastle)
+    f1.add(app, 'length',0.2,1).name("Largo").step(0.1).onChange(updateCastle)
 
     let f2 = gui.addFolder('Catapulta');
 
-    f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(reloadScene)
+    f2.add(app, 'catapult', 0,Math.PI*2).step(0.1).name("Direcion").onChange(rotateCatapult)
     f2.add(app, 'animate').name("Disparar");
 
     let f3 = gui.addFolder('Color');

@@ -8,6 +8,8 @@ class CatapultSystem extends Object3D {
         super(null, null, null, null, null);
 
         let catapult = new Catapult();
+
+        this.lastAngle = app.catapult;
         catapult.rotar(app.catapult,[0,1,0])
         this.addChild(catapult);
     }
@@ -18,6 +20,13 @@ class CatapultSystem extends Object3D {
 
     getProjectilePos(){
         return this.childes[0].getProjectilePos();
+    }
+
+    updateAngle(){
+        let alfa = app.catapult-this.lastAngle;
+        this.lastAngle = app.catapult;
+
+        this.childes[0].rotar(alfa,[0,1,0])
     }
 }
 

@@ -32,6 +32,10 @@ class FullWall extends Object3D {
         }
     }
 
+    updateDoor(){
+        this.childes[0].updateDoor();
+    }
+
 }
 
 export {FullWall}
